@@ -6,43 +6,21 @@ class ThrowingArm(models.TextChoices):
     RIGHT = "R", "Right"
     LEFT = "L", "Left"
 
-class BattingPosition(models.TextChoices):
-    RIGHT = "R", "Right"
-    LEFT = "L", "Left"
-    SWITCH = "Switch"
-
-class PitchingPositions(models.TextChoices):
-    STARTING_PITCHER = "SP", "Starting Pitcher"
-    RELIEF_PITCHER = "RP", "Relief Pitcher"
-    CLOSING_PITCHER = "CL", "Closing Pitcher"
-
-class FieldPosition(models.TextChoices):
-    PITCHER = "P", "Pitcher"
-    CATCHER = "C", "Catcher"
-    FIRST_BASEMAN = "1B", "First Baseman"
-    SECOND_BASEMAN = "2B", "Second Baseman"
-    THIRD_BASEMAN = "3B", "Third Baseman"
-    SHORTSTOP = "SS", "Shortstop"
-    LEFT_FIELD = "LF", "Left Field"
-    CENTER_FIELD = "CF", "Center Field"
-    RIGHT_FIELD = "RF", "Right Field"
-    DESIGNATED_HITTER = "DH", "Designated Hitter"
-
 class ToolGrades(models.IntegerChoices):
     """
     Tool Grades increments are based on the 20-80 Scouting Scale
     """
-    THIRTY = 30
-    THIRTY_FIVE = 35
-    FOURTY = 40
-    FOURTY_FIVE = 45
-    FIFTY = 50
-    FIFTY_FIVE = 55
-    SIXTY = 60
-    SIXTY_FIVE = 65
-    SEVENTY = 70
-    SEVENTY_FIVE = 75
-    EIGHTY = 80
+    THIRTY = 30, "30"
+    THIRTY_FIVE = 35, "35"
+    FOURTY = 40, "40"
+    FOURTY_FIVE = 45, "45"
+    FIFTY = 50, "50"
+    FIFTY_FIVE = 55, "55"
+    SIXTY = 60, "60"
+    SIXTY_FIVE = 65, "65"
+    SEVENTY = 70, "70"
+    SEVENTY_FIVE = 75, "75"
+    EIGHTY = 80, "80"
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -65,6 +43,22 @@ class Hitter(models.Model):
     """
     Represents a baseball hitter with various skill ratings and assessments
     """
+    class BattingPosition(models.TextChoices):
+        RIGHT = "R", "Right"
+        LEFT = "L", "Left"
+        SWITCH = "Switch"
+    class FieldPosition(models.TextChoices):
+        PITCHER = "P", "Pitcher"
+        CATCHER = "C", "Catcher"
+        FIRST_BASEMAN = "1B", "First Baseman"
+        SECOND_BASEMAN = "2B", "Second Baseman"
+        THIRD_BASEMAN = "3B", "Third Baseman"
+        SHORTSTOP = "SS", "Shortstop"
+        LEFT_FIELD = "LF", "Left Field"
+        CENTER_FIELD = "CF", "Center Field"
+        RIGHT_FIELD = "RF", "Right Field"
+        DESIGNATED_HITTER = "DH", "Designated Hitter"
+
     category = models.ForeignKey(Category, related_name="hitters", on_delete=models.CASCADE)
     player_name = models.CharField(max_length=255)
 
@@ -75,11 +69,11 @@ class Hitter(models.Model):
     batting_position = models.CharField(max_length=10, choices=BattingPosition.choices)
     throwing_arm = models.CharField(max_length=10, choices=ThrowingArm.choices)
 
-    hit = models.IntegerField(verbose_name="Hit rating", help_text="Hit rating between 30 to 80", choices=ToolGrades.choices)
-    hit_future_value = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+    hit = models.IntegerField(choices=ToolGrades.choices)
+    hit_future_value = models.IntegerField(choices=ToolGrades.choices)
     hit_comments = models.TextField(max_length=255, blank=True, null=True)
 
-    power = models.IntegerField(verbose_name="Power rating", help_text="Power rating between 30 to 80", choices=ToolGrades.choices)
+    power = models.IntegerField(choices=ToolGrades.choices)
     power_future_value = models.IntegerField(choices=ToolGrades.choices)
     power_comments = models.TextField(max_length=255, blank=True, null=True)
 
@@ -108,6 +102,11 @@ class Pitcher(models.Model):
     """
     Represents a baseball pitcher with various skill ratings and assessments
     """
+    class PitchingPositions(models.TextChoices):
+        STARTING_PITCHER = "SP", "Starting Pitcher"
+        RELIEF_PITCHER = "RP", "Relief Pitcher"
+        CLOSING_PITCHER = "CL", "Closing Pitcher"
+
     category = models.ForeignKey(Category, related_name="pitchers", on_delete=models.CASCADE)
     player_name = models.CharField(max_length=255)
 
