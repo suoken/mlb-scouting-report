@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'compressor',
     'player',
     'core',
 ]
@@ -125,3 +126,18 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# For Django compressor
+
+# location from where the files to tbe compressed are read from and the compressed files are written to
+COMPRESS_ROOT = BASE_DIR / 'static'
+
+# determine whether compression will happen
+COMPRESS_ENABLED = True
+
+# must include Django Compressor's file finder when django.contrib.staticfiles as installed
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
