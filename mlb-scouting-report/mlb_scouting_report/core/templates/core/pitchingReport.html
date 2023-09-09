@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<h1>Create Hitting Report</h1>
+<h1>Create Pitching Report</h1>
 
 <form>
     <div class="flex">
@@ -16,11 +16,6 @@
             <option value="first-baseman">1B</option> 
             <option value="second-baseman">2B</option> 
         </select>
-        Bats
-        <select id="bats" name="bats"> 
-            <option value="left">Left</option> 
-            <option value="right">Right</option> 
-        </select>
         Throws
         <select id="throws" name="throws"> 
             <option value="right">Left</option> 
@@ -29,61 +24,79 @@
         Report Date <input type="date" id="start" name="report-date" value="2023-09-08" min="2018-01-01" max="2023-09-08" /> 
         Declarative Statement <input type="text" name="declarative-statement" class="p-4 bg-gray-100 border-0">
 
-        Hit
-        <select id="hit" name="hit"> 
+        Pitch 1
+        <select id="pitch-1" name="pitch-1"> 
             <option value="thirty">30</option> 
             <option value="thirty-five">35</option> 
         </select>
-        FV 
-        <select id="hit-fv" name="hit-fv"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
-        Power 
-        <select id="power" name="power"> 
+        Velo (low) <input type="number">
+        Velo (high) <input type="number">
+        Grade
+        <select id="grade-pitch-1" name="grade-pitch-1"> 
             <option value="thirty">30</option> 
             <option value="thirty-five">35</option> 
         </select>
         FV
-        <select id="power-fv" name="power-fv"> 
+        <select id="fv-pitch-1" name="fv-pitch-1"> 
             <option value="thirty">30</option> 
             <option value="thirty-five">35</option> 
         </select>
         Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
-        Fielding
-        <select id="fielding" name="fielding"> 
+        Pitch 2
+        <select id="pitch-1" name="pitch-1"> 
+            <option value="thirty">30</option> 
+            <option value="thirty-five">35</option> 
+        </select>
+        Velo (low) <input type="number">
+        Velo (high) <input type="number">
+        Grade
+        <select id="grade-pitch-1" name="grade-pitch-1"> 
             <option value="thirty">30</option> 
             <option value="thirty-five">35</option> 
         </select>
         FV
-        <select id="fielding-fv" name="fielding-fv"> 
+        <select id="fv-pitch-1" name="fv-pitch-1"> 
             <option value="thirty">30</option> 
             <option value="thirty-five">35</option> 
         </select>
         Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
-        Throwing 
-        <select id="throwing" name="throwing"> 
+        Pitch 3
+        <select id="pitch-1" name="pitch-1"> 
+            <option value="thirty">30</option> 
+            <option value="thirty-five">35</option> 
+        </select>
+        Velo (low) <input type="number">
+        Velo (high) <input type="number">
+        Grade
+        <select id="grade-pitch-1" name="grade-pitch-1"> 
             <option value="thirty">30</option> 
             <option value="thirty-five">35</option> 
         </select>
         FV
-        <select id="throwing-fv" name="throwing-fv"> 
+        <select id="fv-pitch-1" name="fv-pitch-1"> 
             <option value="thirty">30</option> 
             <option value="thirty-five">35</option> 
         </select>
         Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
-        Run
-        <select id="run" name="run"> 
+        Pitch 4
+        <select id="pitch-1" name="pitch-1"> 
+            <option value="thirty">30</option> 
+            <option value="thirty-five">35</option> 
+        </select>
+        Velo (low) <input type="number">
+        Velo (high) <input type="number">
+        Grade
+        <select id="grade-pitch-1" name="grade-pitch-1"> 
             <option value="thirty">30</option> 
             <option value="thirty-five">35</option> 
         </select>
         FV
-        <select id="run-fv" name="run-fv"> 
+        <select id="fv-pitch-1" name="fv-pitch-1"> 
             <option value="thirty">30</option> 
             <option value="thirty-five">35</option> 
         </select>
         Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
+        
 
         Overall Grade
         <select id="overall-grade" name="overall-grade"> 

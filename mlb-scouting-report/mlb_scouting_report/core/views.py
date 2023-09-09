@@ -9,3 +9,6 @@ def homePage(request):
 
 def hittingReport(request):
     return render(request, 'core/hittingreport.html')
+
+def pitchingReport(request):
+    return render(request, 'core/pitchingreport.html')
