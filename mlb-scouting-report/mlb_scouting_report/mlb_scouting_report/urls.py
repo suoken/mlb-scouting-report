@@ -17,8 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from core.views import homePage, createHittingReport, pitchingReport
-from player.views import playerHittingReport, playerPitchingReport
+from core.views import homePage, pitchingReport
+from player.views import playerHittingReport, playerPitchingReport, createHittingReport
 
 urlpatterns = [
     path('', homePage, name='homePage'),
