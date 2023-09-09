@@ -12,11 +12,16 @@ def createHittingReport(request):
     if request.method == 'POST':
         form = CreateHittingReport(request.POST)
 
+        print(request.POST)
+        print(form)
+
         if form.is_valid():
+            print("valid")
             form.save()
             return redirect('/')
         
     else:
+        print("not valid")
         form = CreateHittingReport()
 
     return render(request, 'core/create-hitting-report.html', {'form': form})

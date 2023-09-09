@@ -5,51 +5,57 @@
 
 <form method="post" action="." class="space-y-3">
     {% csrf_token %}
-    <div class="max-w-6xl mx-auto flex flex-wrap p-6">
-        <div class="w-full bg-white p-6 rounded-xl">
-            <div> 
-                <label>Player</label>
-                <input type="text" class="bg-gray-100 border-2 mt-2 py-4 px-6 rounded-xl" placeholder="Last, First">
+    <div class="max-w-6xl mx-auto p-6">
+        <div class="w-full flex bg-white p-6 rounded-xl">
+            <div class="w-2/5">
+                <div> 
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2">Player</label>
+                    <input type="text" name="name" id="name" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full" placeholder="Last, First">
+                </div>
+                <div class="flex flex-wrap mb-2 w-full">
+                    <div class="pr-3 mb-6 md:mb-0 w-1/4">
+                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Team</label>
+                        <select id="team" name="team" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
+                            <option value="tor">TOR</option> 
+                            <option value="det">DET</option> 
+                        </select>
+                    </div>
+                    <div class="px-3 mb-6 md:mb-0 w-1/4">
+                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Pos</label>
+                        <select id="pos" name="pos" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
+                            <option value="first-baseman">1B</option> 
+                            <option value="second-baseman">2B</option> 
+                        </select>
+                    </div>
+                    <div class="px-3 mb-6 md:mb-0 w-1/4">
+                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Bats</label>
+                        <select id="bats" name="bats" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
+                            <option value="left">L</option> 
+                            <option value="right">R</option> 
+                        </select>
+                    </div>
+                    <div class="pl-3 mb-6 md:mb-0 w-1/4">
+                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Throws</label>
+                        <select id="throws" name="throws" class="text-left bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
+                            <option value="left">L</option>
+                            <option value="right">R</option> 
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2">Report Date</label>
+                    <input type="date" id="start" name="report-date" class="bg-gray-100 border-2 mt-2 py-1 px-2 rounded-md w-full" value="2023-09-08" min="2018-01-01" max="2023-09-08" /> 
+                </div>
             </div>
-            <div>
-                <label>Team</label>
-                <select id="team" name="team"> 
-                    <option value="tor">Toronto Blue Jays</option> 
-                    <option value="det">Detroit Tigers</option> 
-                </select>
-            </div>
-            <div>
-                <label>Pos</label>
-                <select id="pos" name="pos"> 
-                    <option value="first-baseman">1B</option> 
-                    <option value="second-baseman">2B</option> 
-                </select>
-            </div>
-            <div>
-                <label>Bats</label>
-                <select id="bats" name="bats"> 
-                    <option value="left">Left</option> 
-                    <option value="right">Right</option> 
-                </select>
-            </div>
-            <div>
-                <label>Throws</label>
-                <select id="throws" name="throws"> 
-                    <option value="right">Left</option> 
-                    <option value="left">Right</option> 
-                </select>
-            </div>
-            <div>
-                <label>Report Date</label>
-                <input type="date" id="start" name="report-date" value="2023-09-08" min="2018-01-01" max="2023-09-08" /> 
-            </div>
-            <div>
-                <label>Declarative Statement</label>
-                <input type="text" name="declarative-statement" class="p-4 bg-gray-100 border-2 mt-2 py-4 px-6 rounded-xl">
+
+
+            <div class="w-3/5 pl-6">
+                <label class="block tracking-wide text-gray-700 font-bold mb-2">Declarative Statement</label>
+                <textarea name="declarative-statement" class="resize p-4 bg-gray-100 border-2 mt-2 py-4 px-6 rounded-xl" placeholder="Summarize this player's scouting look in a few brief sentences"></textarea>
             </div>
         </div>
 
-        <div class="w-full bg-gray-100 p-6 rounded-xl mt-6">
+        <div class="w-full bg-white p-6 rounded-xl mt-6">
             Hit
             <select id="hit" name="hit"> 
                 <option value="thirty">30</option> 
@@ -105,7 +111,7 @@
                 <option value="thirty-five">35</option> 
             </select>
             Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
-
+    
             Overall Grade
             <select id="overall-grade" name="overall-grade"> 
                 <option value="thirty">30</option> 
@@ -116,7 +122,7 @@
                 <option value="thirty">30</option> 
                 <option value="thirty-five">35</option> 
             </select>
-
+    
             {% if form.errors %}
                 {% for field in form %}
                     {% for error in field.errors %}
@@ -125,19 +131,21 @@
                         </div>
                     {% endfor %}
                 {% endfor %}
-
+    
                 {% for error in form.non_field_errors %}
                     <div class="p-6 bg-red-200 text-red-800 rounded-xl">
                         <p>{{ error|escape }}</p>
                     </div>
                 {% endfor %}
             {% endif %}
-
+    
             <button class="bg-green-700 rounded-xl py-4 px-6 text-white hover:bg-green-900">
                 <a href="#">Submit</a>
             </button>
         </div>
+
     </div>
+
 </form>
 
 {% endblock %}

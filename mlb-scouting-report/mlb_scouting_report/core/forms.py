@@ -2,8 +2,8 @@ from django import forms
 
 
 TEST_CHOICES = (
-    ("TOR", "Toronto Blue Jays"),
-    ("DET", "Detroit Tigers"),
+    ("tor", "Toronto Blue Jays"),
+    ("det", "Detroit Tigers"),
 )
 
 class CreateHittingReport(forms.Form):
