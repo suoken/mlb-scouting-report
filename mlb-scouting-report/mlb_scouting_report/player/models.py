@@ -21,32 +21,40 @@ class ToolGrades(models.IntegerChoices):
     SEVENTY = 70, "70"
     SEVENTY_FIVE = 75, "75"
     EIGHTY = 80, "80"
-
-class Category(models.Model):
-    name = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True)
-
-    class Meta:
-        ordering = ("name",)
-    
-    def __str__(self):
-        return self.name
     
 class Team(models.Model):
+    id = models.AutoField(primary_key=True)
     code = models.CharField(max_length=5, unique=True)
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
+
+    
+class Player(models.Model):
+    id = models.AutoField(primary_key=True)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, related_name="players")
+    slug = models.SlugField(unique=True)
+
+    class Meta:
+        ordering = ("-last_name",)
+    
+    def __str__(self):
+        return self.last_name
+    
     
 class Hitter(models.Model):
     """
     Represents a baseball hitter with various skill ratings and assessments
     """
+
     class BattingPosition(models.TextChoices):
         RIGHT = "R", "Right"
         LEFT = "L", "Left"
         SWITCH = "Switch"
+
     class FieldPosition(models.TextChoices):
         PITCHER = "P", "Pitcher"
         CATCHER = "C", "Catcher"
@@ -59,12 +67,10 @@ class Hitter(models.Model):
         RIGHT_FIELD = "RF", "Right Field"
         DESIGNATED_HITTER = "DH", "Designated Hitter"
 
-    category = models.ForeignKey(Category, related_name="hitters", on_delete=models.CASCADE)
-    player_name = models.CharField(max_length=255)
+    player = models.ForeignKey(Player, related_name="hitters", on_delete=models.CASCADE)
 
     report_date = models.DateField(auto_now_add=True)
     declarative_statement = models.TextField(blank=True, null=True)
-    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, related_name="hitters")
     field_position = models.CharField(max_length=10, choices=FieldPosition.choices)
     batting_position = models.CharField(max_length=10, choices=BattingPosition.choices)
     throwing_arm = models.CharField(max_length=10, choices=ThrowingArm.choices)
@@ -96,7 +102,8 @@ class Hitter(models.Model):
         ordering = ("-report_date",)
 
     def __str__(self):
-        return self.player_name
+        return self.player.last_name
+
 
 class Pitcher(models.Model):
     """
@@ -107,12 +114,10 @@ class Pitcher(models.Model):
         RELIEF_PITCHER = "RP", "Relief Pitcher"
         CLOSING_PITCHER = "CL", "Closing Pitcher"
 
-    category = models.ForeignKey(Category, related_name="pitchers", on_delete=models.CASCADE)
-    player_name = models.CharField(max_length=255)
+    player = models.ForeignKey(Player, related_name="pitchers", on_delete=models.CASCADE)
 
     report_date = models.DateField(auto_now_add=True)
     declarative_statement = models.TextField(max_length=1024, blank=True, null=True)
-    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, related_name="pitchers")
     position = models.CharField(max_length=10, choices=PitchingPositions.choices)
     throwing_arm = models.CharField(max_length=20, choices=ThrowingArm.choices)
 
@@ -123,7 +128,7 @@ class Pitcher(models.Model):
         ordering = ("-report_date",)
 
     def __str__(self):
-        return self.player_name
+        return self.player.last_name
 
 class Pitch(models.Model):
     """

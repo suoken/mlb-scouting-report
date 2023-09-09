@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Hitter, Pitcher, Team, Pitch
+from .models import Player, Hitter, Pitcher, Team, Pitch
 
 class PitchInline(admin.TabularInline):
     model = Pitch
@@ -9,7 +9,7 @@ class PitchInline(admin.TabularInline):
 class PitcherAdmin(admin.ModelAdmin):
     inlines = [PitchInline]
 
-admin.site.register(Category)
+admin.site.register(Player)
 admin.site.register(Hitter)
 admin.site.register(Pitcher, PitcherAdmin)
 admin.site.register(Team)
