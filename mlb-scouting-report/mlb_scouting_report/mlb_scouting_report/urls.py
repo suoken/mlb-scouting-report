@@ -17,9 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from core.views import homePage
+from core.views import homePage, hittingReport
+from player.views import playerHittingReport, playerPitchingReport 
 
 urlpatterns = [
     path('', homePage, name='homePage'),
+    path('hittingReport/', hittingReport, name='hittingReport'),
+    path('playerHittingReport/', playerHittingReport, name='playerHittingReport'),
+    path('playerPitchingReport/', playerPitchingReport, name='playerPitchingReport'),
     path('admin/', admin.site.urls),
 ]
