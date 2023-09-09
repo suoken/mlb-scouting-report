@@ -1,12 +1,19 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<h1>Hitters</h1>
-<button class="p-12 bg-white border-xl">
-    <a href="{% url 'createHittingReport' %}">Create new report</a>
-</button>
-<table class="table-auto shadow-lg bg-white rounded-lg">
-    <tr>
+<div class="flex flex-wrap my-2">
+    <div>
+        <h1 class="font-bold text-white">Hitters</h1>
+    </div>
+    <div class="flex">
+        <button class="px-6 py-2 border-2 rounded-xl">
+            <a class="text-white" href="{% url 'createHittingReport' %}">Create new report</a>
+        </button>
+    </div>
+</div>
+
+<table class="table-auto shadow-lg bg-white">
+    <tr class="rounded-xl">
       <th class="bg-tbj-secondary text-white text-left px-8 py-4">Date</th>
       <th class="bg-tbj-secondary text-white text-left px-8 py-4">Org</th>
       <th class="bg-tbj-secondary text-white text-left px-8 py-4">Pos</th>
@@ -24,7 +31,7 @@
       <td class="border-b px-8 py-4">{{ hitter.report_date }}</td>
       <td class="border-b px-8 py-4">{{ hitter.player.team }}</td>
       <td class="border-b px-8 py-4">{{ hitter.field_position }}</td>
-      <td class="border-b px-8 py-4"><a href="{% url 'playerHittingReport' hitter.player.slug %}">{{ hitter.player.last_name }}, {{ hitter.player.first_name }}</a></td>
+      <td class="border-b px-8 py-4"><a href="{% url 'playerHittingReport' hitter.player.slug %}">{{ hitter.player.name }}</a></td>
       <td class="border-b px-8 py-4">{{ hitter.hit }}</td>
       <td class="border-b px-8 py-4">{{ hitter.power }}</td>
       <td class="border-b px-8 py-4">{{ hitter.fielding }}</td>
@@ -36,10 +43,16 @@
     {% endfor %}
 </table>
 
-<h1>Pitchers</h1>
-<button class="p-12 bg-white border-xl">
-    <a href="{% url 'createHittingReport' %}">Create new report</a>
-</button>
+<div class="flex flex-wrap my-2">
+    <div>
+        <h1 class="font-bold text-white">Pitchers</h1>
+    </div>
+    <div class="flex">
+        <button class="px-6 py-2 border-2 rounded-xl">
+            <a class="text-white" href="{% url 'createHittingReport' %}">Create new report</a>
+        </button>
+    </div>
+</div>
 <table class="shadow-lg bg-white">
     <tr>
       <th class="bg-tbj-secondary text-white text-left px-8 py-4">Date</th>

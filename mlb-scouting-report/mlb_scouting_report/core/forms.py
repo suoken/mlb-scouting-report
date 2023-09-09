@@ -6,10 +6,9 @@ TEST_CHOICES = (
     ("DET", "Detroit Tigers"),
 )
 
-class CreateHittingReport():
-    first_name = forms.CharField(max_length=255, required=True)
-    last_name = forms.CharField(max_length=255, required=True)
-    team = forms.ChoiceField(choices=TEST_CHOICES)
+class CreateHittingReport(forms.Form):
+    name = forms.CharField(label="Name", max_length=255, required=True)
+    team = forms.ChoiceField(label="Team", choices=TEST_CHOICES)
 
-    class Meta:
-        fields = ["first_name", "last_name", "team"]
+    # class Meta:
+    #     fields = ["first_name", "last_name", "team"]

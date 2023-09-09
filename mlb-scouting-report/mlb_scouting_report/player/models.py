@@ -33,16 +33,15 @@ class Team(models.Model):
     
 class Player(models.Model):
     id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, related_name="players")
     slug = models.SlugField(unique=True)
 
     class Meta:
-        ordering = ("-last_name",)
+        ordering = ("-name",)
     
     def __str__(self):
-        return self.last_name
+        return self.name
     
     
 class Hitter(models.Model):
@@ -102,10 +101,10 @@ class Hitter(models.Model):
         ordering = ("-report_date",)
 
     def __str__(self):
-        return self.player.last_name
+        return self.player.name
     
     def getPlayerName(self):
-        return self.player.last_name
+        return self.player.name
 
 
 class Pitcher(models.Model):
@@ -131,7 +130,7 @@ class Pitcher(models.Model):
         ordering = ("-report_date",)
 
     def __str__(self):
-        return self.player.last_name
+        return self.player.name
 
 class Pitch(models.Model):
     """
