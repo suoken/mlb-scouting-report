@@ -103,6 +103,9 @@ class Hitter(models.Model):
 
     def __str__(self):
         return self.player.last_name
+    
+    def getPlayerName(self):
+        return self.player.last_name
 
 
 class Pitcher(models.Model):

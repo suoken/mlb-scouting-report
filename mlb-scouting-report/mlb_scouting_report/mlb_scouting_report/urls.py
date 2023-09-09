@@ -24,7 +24,7 @@ urlpatterns = [
     path('', homePage, name='homePage'),
     path('hittingReport/', hittingReport, name='hittingReport'),
     path('pitchingReport/', pitchingReport, name='pitchingReport'),
-    path('playerHittingReport/', playerHittingReport, name='playerHittingReport'),
-    path('playerPitchingReport/', playerPitchingReport, name='playerPitchingReport'),
+    path('playerHittingReport/<slug:slug>', playerHittingReport, name='playerHittingReport'),
+    path('playerPitchingReport/<slug:slug>', playerPitchingReport, name='playerPitchingReport'),
     path('admin/', admin.site.urls),
 ]

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from player.models import Hitter, Pitcher
+from player.models import Hitter, Pitcher, Player
 
 def homePage(request):
     hitters = Hitter.objects.all()[0:4]

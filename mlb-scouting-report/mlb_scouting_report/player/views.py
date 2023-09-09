@@ -1,7 +1,10 @@
 from django.shortcuts import render
 
-def playerHittingReport(request):
-    return render(request, 'player/playerHittingReport.html')
+from .models import Player
 
-def playerPitchingReport(request):
+def playerHittingReport(request, slug):
+    player = Player.objects.get(slug=slug)
+    return render(request, 'player/playerHittingReport.html', {'player': player})
+
+def playerPitchingReport(request, slug):
     return render(request, 'player/playerPitchingReport.html')
