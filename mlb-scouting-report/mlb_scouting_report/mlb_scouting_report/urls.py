@@ -17,12 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from core.views import homePage, hittingReport, pitchingReport
+from core.views import homePage, createHittingReport, pitchingReport
 from player.views import playerHittingReport, playerPitchingReport
 
 urlpatterns = [
     path('', homePage, name='homePage'),
-    path('hittingReport/', hittingReport, name='hittingReport'),
+    path('create-hitting-report/', createHittingReport, name='createHittingReport'),
     path('pitchingReport/', pitchingReport, name='pitchingReport'),
     path('playerHittingReport/<slug:slug>', playerHittingReport, name='playerHittingReport'),
     path('playerPitchingReport/<slug:slug>', playerPitchingReport, name='playerPitchingReport'),

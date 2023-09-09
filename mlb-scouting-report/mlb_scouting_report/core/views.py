@@ -7,8 +7,8 @@ def homePage(request):
     pitchers = Pitcher.objects.all()[0:4]
     return render(request, 'core/homepage.html', {'hitters': hitters, 'pitchers': pitchers})
 
-def hittingReport(request):
-    return render(request, 'core/hittingreport.html')
+def createHittingReport(request):
+    return render(request, 'core/create-hitting-report.html')
 
 def pitchingReport(request):
     return render(request, 'core/pitchingreport.html')

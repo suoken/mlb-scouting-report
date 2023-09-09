@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .models import Player
 
 def playerHittingReport(request, slug):
-    player = Player.objects.get(slug=slug)
+    player = get_object_or_404(Player, slug=slug)
     return render(request, 'player/playerHittingReport.html', {'player': player})
 
 def playerPitchingReport(request, slug):
