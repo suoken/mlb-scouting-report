@@ -1,104 +1,129 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<h1>Create Hitting Report</h1>
+<h1 class="mb-6 text-2xl">Create Hitting Report</h1>
 
-<form>
-    <div class="flex">
-        Player <input type="text" class="bg-gray-100 border-0" placeholder="Last, First">
-        Team 
-        <select id="team" name="team"> 
-            <option value="tor">Toronto Blue Jays</option> 
-            <option value="det">Detroit Tigers</option> 
-        </select>
-        Pos
-        <select id="pos" name="pos"> 
-            <option value="first-baseman">1B</option> 
-            <option value="second-baseman">2B</option> 
-        </select>
-        Bats
-        <select id="bats" name="bats"> 
-            <option value="left">Left</option> 
-            <option value="right">Right</option> 
-        </select>
-        Throws
-        <select id="throws" name="throws"> 
-            <option value="right">Left</option> 
-            <option value="left">Right</option> 
-        </select>
-        Report Date <input type="date" id="start" name="report-date" value="2023-09-08" min="2018-01-01" max="2023-09-08" /> 
-        Declarative Statement <input type="text" name="declarative-statement" class="p-4 bg-gray-100 border-0">
+<form method="post" action="." class="space-y-3">
+    <div class="max-w-xl mx-auto flex flex-wrap p-6">
+        <div class="w-full bg-white p-6 rounded-xl">
+            <div> 
+                <label>Player</label>
+                <input type="text" class="bg-gray-100 border-2 mt-2 py-4 px-6 rounded-xl" placeholder="Last, First">
+            </div>
+            <div>
+                <label>Team</label>
+                <select id="team" name="team"> 
+                    <option value="tor">Toronto Blue Jays</option> 
+                    <option value="det">Detroit Tigers</option> 
+                </select>
+            </div>
+            <div>
+                <label>Pos</label>
+                <select id="pos" name="pos"> 
+                    <option value="first-baseman">1B</option> 
+                    <option value="second-baseman">2B</option> 
+                </select>
+            </div>
+            <div>
+                <label>Bats</label>
+                <select id="bats" name="bats"> 
+                    <option value="left">Left</option> 
+                    <option value="right">Right</option> 
+                </select>
+            </div>
+            <div>
+                <label>Throws</label>
+                <select id="throws" name="throws"> 
+                    <option value="right">Left</option> 
+                    <option value="left">Right</option> 
+                </select>
+            </div>
+            <div>
+                <label>Report Date</label>
+                <input type="date" id="start" name="report-date" value="2023-09-08" min="2018-01-01" max="2023-09-08" /> 
+            </div>
+            <div>
+                <label>Declarative Statement</label>
+                <input type="text" name="declarative-statement" class="p-4 bg-gray-100 border-2 mt-2 py-4 px-6 rounded-xl">
+            </div>
+        </div>
 
-        Hit
-        <select id="hit" name="hit"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        FV 
-        <select id="hit-fv" name="hit-fv"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
-        Power 
-        <select id="power" name="power"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        FV
-        <select id="power-fv" name="power-fv"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
-        Fielding
-        <select id="fielding" name="fielding"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        FV
-        <select id="fielding-fv" name="fielding-fv"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
-        Throwing 
-        <select id="throwing" name="throwing"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        FV
-        <select id="throwing-fv" name="throwing-fv"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
-        Run
-        <select id="run" name="run"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        FV
-        <select id="run-fv" name="run-fv"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
+        <div class="w-full bg-gray-100 p-6 rounded-xl mt-6">
+            Hit
+            <select id="hit" name="hit"> 
+                <option value="thirty">30</option> 
+                <option value="thirty-five">35</option> 
+            </select>
+            FV 
+            <select id="hit-fv" name="hit-fv"> 
+                <option value="thirty">30</option> 
+                <option value="thirty-five">35</option> 
+            </select>
+            Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
+            Power 
+            <select id="power" name="power"> 
+                <option value="thirty">30</option> 
+                <option value="thirty-five">35</option> 
+            </select>
+            FV
+            <select id="power-fv" name="power-fv"> 
+                <option value="thirty">30</option> 
+                <option value="thirty-five">35</option> 
+            </select>
+            Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
+            Fielding
+            <select id="fielding" name="fielding"> 
+                <option value="thirty">30</option> 
+                <option value="thirty-five">35</option> 
+            </select>
+            FV
+            <select id="fielding-fv" name="fielding-fv"> 
+                <option value="thirty">30</option> 
+                <option value="thirty-five">35</option> 
+            </select>
+            Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
+            Throwing 
+            <select id="throwing" name="throwing"> 
+                <option value="thirty">30</option> 
+                <option value="thirty-five">35</option> 
+            </select>
+            FV
+            <select id="throwing-fv" name="throwing-fv"> 
+                <option value="thirty">30</option> 
+                <option value="thirty-five">35</option> 
+            </select>
+            Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
+            Run
+            <select id="run" name="run"> 
+                <option value="thirty">30</option> 
+                <option value="thirty-five">35</option> 
+            </select>
+            FV
+            <select id="run-fv" name="run-fv"> 
+                <option value="thirty">30</option> 
+                <option value="thirty-five">35</option> 
+            </select>
+            Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
 
-        Overall Grade
-        <select id="overall-grade" name="overall-grade"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        Future Grade
-        <select id="future-grade" name="future-grade"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
+            Overall Grade
+            <select id="overall-grade" name="overall-grade"> 
+                <option value="thirty">30</option> 
+                <option value="thirty-five">35</option> 
+            </select>
+            Future Grade
+            <select id="future-grade" name="future-grade"> 
+                <option value="thirty">30</option> 
+                <option value="thirty-five">35</option> 
+            </select>
 
-        <button class="p-12 bg-white border-xl">
-            <a href="#">Submit</a>
-        </button>
+            <div class="p-6 bg-red-200 text-red-800 rounded-xl">
+                <p>There is an error!</p>
+            </div>
+
+            <button class="bg-green-700 rounded-xl py-4 px-6 text-white hover:bg-green-900">
+                <a href="#">Submit</a>
+            </button>
+        </div>
     </div>
 </form>
 
