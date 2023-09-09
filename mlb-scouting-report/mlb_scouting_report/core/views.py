@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from player.models import Hitter, Pitcher, Player
+from .forms import CreateHittingReport
 
 def homePage(request):
     hitters = Hitter.objects.all()[0:4]
@@ -8,7 +9,17 @@ def homePage(request):
     return render(request, 'core/homepage.html', {'hitters': hitters, 'pitchers': pitchers})
 
 def createHittingReport(request):
-    return render(request, 'core/create-hitting-report.html')
+    if request.method == 'POST':
+        form = CreateHittingReport(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+        
+    else:
+        form = CreateHittingReport()
+
+    return render(request, 'core/create-hitting-report.html', {'form': form})
 
 def pitchingReport(request):
     return render(request, 'core/pitchingreport.html')

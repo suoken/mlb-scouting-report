@@ -4,6 +4,9 @@ module.exports = {
     './core/templates/**/*.html'
   ],
   theme: {
+    fontFamily: {
+      sans: ['IBM Plex Sans', 'sans-serif']
+    },
     extend: {
       colors: {
         'tbj-nav':'#204377',
@@ -12,7 +15,7 @@ module.exports = {
         'tbj-danger':'#842C2E',
         'tbj-offset':'#F7F7F7'
       }
-    }
+    },
   },
   plugins: [],
 }
