@@ -43,30 +43,41 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block tracking-wide text-gray-700 font-bold mb-2">Report Date</label>
-                    <input type="date" id="start" name="report-date" class="bg-gray-100 border-2 mt-2 py-1 px-2 rounded-md w-full" value="2023-09-08" min="2018-01-01" max="2023-09-08" /> 
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Report Date</label>
+                    <input type="date" id="start" name="report-date" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full" value="2023-09-08" min="2018-01-01" max="2023-09-08" /> 
                 </div>
             </div>
 
 
             <div class="w-3/5 pl-6">
                 <label class="block tracking-wide text-gray-700 font-bold mb-2">Declarative Statement</label>
-                <textarea name="declarative-statement" class="resize p-4 bg-gray-100 border-2 mt-2 py-4 px-6 rounded-xl" placeholder="Summarize this player's scouting look in a few brief sentences"></textarea>
+                <textarea name="declarative-statement" class="resize p-4 bg-gray-100 border-2 py-4 px-6 rounded-md w-full h-2/3" placeholder="Summarize this player's scouting look in a few brief sentences"></textarea>
             </div>
         </div>
 
         <div class="w-full bg-white p-6 rounded-xl mt-6">
-            Hit
-            <select id="hit" name="hit"> 
-                <option value="thirty">30</option> 
-                <option value="thirty-five">35</option> 
-            </select>
-            FV 
-            <select id="hit-fv" name="hit-fv"> 
-                <option value="thirty">30</option> 
-                <option value="thirty-five">35</option> 
-            </select>
-            Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
+            <div class="flex flex-wrap mb-2 w-full">
+                <div class="pr-3 mb-6 md:mb-0 w-1/5">
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Hit</label>
+                    <select id="hit" name="hit" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
+                        <option value="thirty">30</option> 
+                        <option value="thirty-five">35</option> 
+                    </select>
+                </div>
+                <div class="mb-6 md:mb-0 w-1/5">
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">FV</label>
+                    <select id="hit-fv" name="hit-fv" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
+                        <option value="thirty">30</option> 
+                        <option value="thirty-five">35</option> 
+                    </select>
+                </div>
+                <div class="w-3/5 pl-6">
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Comments</label>
+                    <input type="text" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full">
+                </div>
+            </div>
+
+            
             Power 
             <select id="power" name="power"> 
                 <option value="thirty">30</option> 
