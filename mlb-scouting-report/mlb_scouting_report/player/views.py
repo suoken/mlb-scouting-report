@@ -26,7 +26,8 @@ def createHittingReport(request):
     return render(request, 'player/create-hitting-report.html', {'form': form, 'tools': tools})
 
 def playerPitchingReport(request, slug):
-    return render(request, 'player/playerPitchingReport.html')
+    player = get_object_or_404(Player, slug=slug)
+    return render(request, 'player/playerPitchingReport.html', {'player', player})
 
 def createPitchingReport(request):
     form = PitchingReportForm()

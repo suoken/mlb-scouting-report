@@ -1,118 +1,148 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<h1>Create Pitching Report</h1>
+<div class="max-w-6xl mt-4 flex justify-between items-center mx-auto">
+    <h1 class="text-2xl text-white font-bold">Create Hitting Report</h1>
+    <a href="/" class="rounded-md py-2 px-6 text-white border-2 inline-block">
+        Back to Reports
+    </a>
+</div>
 
-<form>
-    <div class="flex">
-        Player <input type="text" name="player-name" class="bg-gray-100 border-0" placeholder="Last, First">
-        Team 
-        <select id="team" name="team"> 
-            <option value="tor">Toronto Blue Jays</option> 
-            <option value="det">Detroit Tigers</option> 
-        </select>
-        Pos
-        <select id="pos" name="pos"> 
-            <option value="first-baseman">1B</option> 
-            <option value="second-baseman">2B</option> 
-        </select>
-        Throws
-        <select id="throws" name="throws"> 
-            <option value="right">Left</option> 
-            <option value="left">Right</option> 
-        </select>
-        Report Date <input type="date" id="start" name="report-date" value="2023-09-08" min="2018-01-01" max="2023-09-08" /> 
-        Declarative Statement <input type="text" name="declarative-statement" class="p-4 bg-gray-100 border-0">
+<form method="post" action="." class="space-y-3">
+    {% csrf_token %}
+    <div class="max-w-6xl mx-auto">
+        <div class="w-full flex bg-white p-6 rounded-xl">
+            <div class="w-2/5">
+                <div> 
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2">{{ form.name.label }}</label>
+                    <input type="text" name="{{ form.name.name }}" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full" placeholder="Last, First">
+                </div>
+                <div class="flex flex-wrap mb-2 w-full">
+                    <div class="pr-3 mb-6 md:mb-0 w-1/4">
+                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">{{ form.team.label }}</label>
+                        <select name="{{ form.team.code }}" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
+                            {% for team in form.team.field.queryset %}
+                                <option value="{{ team.code }}">{{ team.code|upper }}</option> 
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="px-3 mb-6 md:mb-0 w-1/4">
+                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">{{ form.pos.label }}</label>
+                        <select name="{{ form.pos.value }}" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
+                            {% for value, display in form.fields.pos.choices %}
+                                <option value="{{ value }}">{{ value }}</option> 
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="pl-3 mb-6 md:mb-0 w-1/4">
+                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">{{ form.throws.label }}</label>
+                        <select name="{{ forms.throws.value }}" class="text-left bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
+                            {% for value, display in form.fields.throws.choices %}
+                                <option value="{{ value }}">{{ value }}</option> 
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Report Date</label>
+                    <input type="date" id="start" name="report-date" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full" value="2023-09-08" min="2018-01-01" max="2023-09-08" /> 
+                </div>
+            </div>
 
-        Pitch 1
-        <select id="pitch-1" name="pitch-1"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        Velo (low) <input type="number">
-        Velo (high) <input type="number">
-        Grade
-        <select id="grade-pitch-1" name="grade-pitch-1"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        FV
-        <select id="fv-pitch-1" name="fv-pitch-1"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
-        Pitch 2
-        <select id="pitch-1" name="pitch-1"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        Velo (low) <input type="number">
-        Velo (high) <input type="number">
-        Grade
-        <select id="grade-pitch-1" name="grade-pitch-1"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        FV
-        <select id="fv-pitch-1" name="fv-pitch-1"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
-        Pitch 3
-        <select id="pitch-1" name="pitch-1"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        Velo (low) <input type="number">
-        Velo (high) <input type="number">
-        Grade
-        <select id="grade-pitch-1" name="grade-pitch-1"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        FV
-        <select id="fv-pitch-1" name="fv-pitch-1"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
-        Pitch 4
-        <select id="pitch-1" name="pitch-1"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        Velo (low) <input type="number">
-        Velo (high) <input type="number">
-        Grade
-        <select id="grade-pitch-1" name="grade-pitch-1"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        FV
-        <select id="fv-pitch-1" name="fv-pitch-1"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
-        
 
-        Overall Grade
-        <select id="overall-grade" name="overall-grade"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
-        Future Grade
-        <select id="future-grade" name="future-grade"> 
-            <option value="thirty">30</option> 
-            <option value="thirty-five">35</option> 
-        </select>
+            <div class="w-3/5 pl-6">
+                <label class="block tracking-wide text-gray-700 font-bold mb-2">Declarative Statement</label>
+                <textarea name="declarative-statement" class="resize p-4 bg-gray-100 border-2 py-4 px-6 rounded-md w-full h-2/3" placeholder="Summarize this player's scouting look in a few brief sentences"></textarea>
+            </div>
+        </div>
 
-        <button class="p-12 bg-white border-xl">
-            <a href="#">Submit</a>
-        </button>
+        <div class="w-full bg-white p-6 rounded-xl mt-6">
+            <div class="flex flex-wrap mb-2 w-full">
+                {% for i in '1234' %}
+                <div class="pr-3 px-2 w-1/5">
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">{{ form.pitches.label }} {{ i }}</label>
+                    <select id="hit" name="hit" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
+                        {% for value, display in form.fields.pitches.choices %}
+                            <option value="{{ values }}">{{ display }}</option> 
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="px-2 w-1/5">
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Velo(Low)</label>
+                    <input type="number" name="velo-low" class="bg-gray-100 border-2 rounded-md py-1"/>
+                </div>
+                <div class="px-2 w-1/5">
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Velo(High)</label>
+                    <input type="number" name="velo-low" class="bg-gray-100 border-2 rounded-md py-1"/>
+                </div>
+                <div class="px-2 w-1/5">
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Grade</label>
+                    <select id="hit-fv" name="hit-fv" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
+                        {% for value, display in form.fields.tool_grades.choices %}
+                            <option value="{{ values }}">{{ display }}</option> 
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="px-2 w-1/5">
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">FV</label>
+                    <select id="hit-fv" name="hit-fv" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
+                        {% for value, display in form.fields.tool_grades.choices %}
+                            <option value="{{ values }}">{{ display }}</option> 
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="pl-6 w-1/5">
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Comments</label>
+                    <input type="text" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full">
+                </div>
+                {% endfor %}
+            </div>
+            
+    
+            <hr/>
+            <div class="flex flex-wrap mb-6 w-full">
+                <div class="pr-3 mb-6 md:mb-0 w-1/5">
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Overall Grade</label>
+                    <select id="hit" name="hit" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
+                        {% for value, display in form.fields.tool_grades.choices %}
+                            <option value="{{ values }}">{{ display }}</option> 
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-6 md:mb-0 w-1/5">
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Future Grade</label>
+                    <select id="hit-fv" name="hit-fv" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
+                        {% for value, display in form.fields.tool_grades.choices %}
+                            <option value="{{ values }}">{{ display }}</option> 
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <hr/>
+            
+    
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="p-6 bg-red-200 text-red-800 rounded-xl">
+                            <p>{{ error|escape }}</p>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+    
+                {% for error in form.non_field_errors %}
+                    <div class="p-6 bg-red-200 text-red-800 rounded-xl">
+                        <p>{{ error|escape }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+    
+            <button class="bg-green-700 mt-4 rounded-md py-2 px-3 text-white hover:bg-green-900 font-semibold">Submit</button>
+        </div>
+
     </div>
+
 </form>
 
 {% endblock %}
