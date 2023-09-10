@@ -6,7 +6,13 @@ from .forms import HittingReportForm, PitchingReportForm
 
 def playerHittingReport(request, slug):
     player = get_object_or_404(Player, slug=slug)
-    return render(request, 'player/playerHittingReport.html', {'player': player})
+    return render(request, 'player/player-hitting-report.html', {'player': player})
+
+def playerPitchingReport(request, slug):
+    player = get_object_or_404(Player, slug=slug)
+    return render(request, 'player/player-pitching-report.html', {'player': player})
+
+
 
 def createHittingReport(request):
     tools = ["Hit", "Power", "Fielding", "Throwing", "Run"]
@@ -24,10 +30,6 @@ def createHittingReport(request):
         form = HittingReportForm()
 
     return render(request, 'player/create-hitting-report.html', {'form': form, 'tools': tools})
-
-def playerPitchingReport(request, slug):
-    player = get_object_or_404(Player, slug=slug)
-    return render(request, 'player/playerPitchingReport.html', {'player', player})
 
 def createPitchingReport(request):
     form = PitchingReportForm()

@@ -63,9 +63,9 @@
         {% for pitcher in pitchers %}
         <tr class="hover:bg-gray-50">
         <td class="border-b px-8 py-4">{{ pitcher.report_date }}</td>
-        <td class="border-b px-8 py-4">{{ pitcher.team }}</td>
+        <td class="border-b px-8 py-4">{{ pitcher.player.team }}</td>
         <td class="border-b px-8 py-4">{{ pitcher.position }}</td>
-        <td class="border-b px-8 py-4"><a href="{% url 'playerHittingReport' hitter.player.slug %}">{{ pitcher.player.name }}</a></td>
+        <td class="border-b px-8 py-4"><a href="{% url 'playerPitchingReport' pitcher.player.slug %}">{{ pitcher.player.name }}</a></td>
         <td class="border-b px-8 py-4">###</td>
         <td class="border-b px-8 py-4">###</td>
         <td class="border-b px-8 py-4">{{ pitcher.overall_grade }}</td>

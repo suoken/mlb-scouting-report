@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h1>Player Hitting Report</h1>
+<div class="max-w-6xl mx-auto flex flex-wrap py-6 px6 xl:px-0">
+    <div class="images w-full mb-6 lg:mb-0 lg:w-3/5">
+        <img class="rounded-xl" src="1.jpg">
+    </div>
+
+        <div class="information w-full lg:w2/5 lg:p-6">
+            <h1 class="text-2xl">{{ player.name }}</h1>
+            <p class="mt-1 text-gray-400">Related info</p>
+
+            <p class="mt-6 text-gray-700"> Description</p> 
+
+            <div class="mt-6 inline-block px-8 py-4 rounded-xl bg-purple-500 text-white">Score</div>
+        </div>
+</div>
+
+{% endblock %}
+

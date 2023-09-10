@@ -26,7 +26,7 @@ urlpatterns = [
     path('', homePage, name='homePage'),
     path('create-hitting-report/', createHittingReport, name='createHittingReport'),
     path('create-pitching-report/', createPitchingReport, name='createPitchingReport'),
-    path('playerHittingReport/<slug:slug>', playerHittingReport, name='playerHittingReport'),
-    path('playerPitchingReport/<slug:slug>', playerPitchingReport, name='playerPitchingReport'),
+    path('player-hitting-report/<slug:slug>', playerHittingReport, name='playerHittingReport'),
+    path('player-pitching-report/<slug:slug>', playerPitchingReport, name='playerPitchingReport'),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
