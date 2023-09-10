@@ -7,6 +7,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>MLB Scouting Report</title>
+        <link rel="icon" href="{% get_media_prefix %}scout-icon.png">
         <script src="https://unpkg.com/htmx.org@1.7.0"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,9 +19,9 @@
     </head>
     <body>
         <nav class=" border-gray-300">
-            <div class="max-w-full mx-auto py-2 px-6 xl:px-6 flex items-center justify-between bg-tbj-nav">
-                <div class="menu-left flex items-center space-x-6">
-                    <a href="#"><img class="logo" src=""/>LOGO GOES HERE</a>
+            <div class="max-w-full mx-auto py-2 px-6 xl:px-6 bg-tbj-nav">
+                <div class="max-w-6xl my-2 flex mx-auto">
+                    <img src="{% get_media_prefix %}scout-logo.png" width="10%">
                 </div>
             </div>
 

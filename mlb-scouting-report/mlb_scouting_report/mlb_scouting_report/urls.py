@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from core.views import homePage, pitchingReport
 from player.views import playerHittingReport, playerPitchingReport, createHittingReport
@@ -27,4 +29,4 @@ urlpatterns = [
     path('playerHittingReport/<slug:slug>', playerHittingReport, name='playerHittingReport'),
     path('playerPitchingReport/<slug:slug>', playerPitchingReport, name='playerPitchingReport'),
     path('admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
