@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<h1 class="mb-6 text-2xl">Create Hitting Report</h1>
+<h1 class="mb-6 text-2xl text-white font-semibold">Create Hitting Report</h1>
 
 <form method="post" action="." class="space-y-3">
     {% csrf_token %}
@@ -9,36 +9,40 @@
         <div class="w-full flex bg-white p-6 rounded-xl">
             <div class="w-2/5">
                 <div> 
-                    <label class="block tracking-wide text-gray-700 font-bold mb-2">Player</label>
-                    <input type="text" name="name" id="name" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full" placeholder="Last, First">
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2">{{ form.name.label }}</label>
+                    <input type="text" name="{{ form.name.name }}" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full" placeholder="Last, First">
                 </div>
                 <div class="flex flex-wrap mb-2 w-full">
                     <div class="pr-3 mb-6 md:mb-0 w-1/4">
-                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Team</label>
-                        <select id="team" name="team" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
-                            <option value="tor">TOR</option> 
-                            <option value="det">DET</option> 
+                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">{{ form.team.label }}</label>
+                        <select name="{{ form.team.code }}" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
+                            {% for team in form.team.field.queryset %}
+                                <option value="{{ team.code }}">{{ team.code|upper }}</option> 
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="px-3 mb-6 md:mb-0 w-1/4">
-                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Pos</label>
-                        <select id="pos" name="pos" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
-                            <option value="first-baseman">1B</option> 
-                            <option value="second-baseman">2B</option> 
+                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">{{ form.pos.label }}</label>
+                        <select name="{{ form.pos.value }}" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
+                            {% for value, display in form.fields.pos.choices %}
+                                <option value="{{ value }}">{{ value }}</option> 
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="px-3 mb-6 md:mb-0 w-1/4">
-                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Bats</label>
-                        <select id="bats" name="bats" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
-                            <option value="left">L</option> 
-                            <option value="right">R</option> 
+                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">{{ form.bats.label }}</label>
+                        <select name="{{ form.bats.value }}" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
+                            {% for value, display in form.fields.bats.choices %}
+                                <option value="{{ value }}">{{ value }}</option> 
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="pl-3 mb-6 md:mb-0 w-1/4">
-                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Throws</label>
-                        <select id="throws" name="throws" class="text-left bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
-                            <option value="left">L</option>
-                            <option value="right">R</option> 
+                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">{{ form.throws.label }}</label>
+                        <select name="{{ forms.throws.value }}" class="text-left bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
+                            {% for value, display in form.fields.throws.choices %}
+                                <option value="{{ value }}">{{ value }}</option> 
+                            {% endfor %}
                         </select>
                     </div>
                 </div>
@@ -57,71 +61,29 @@
 
         <div class="w-full bg-white p-6 rounded-xl mt-6">
             <div class="flex flex-wrap mb-2 w-full">
-                <div class="pr-3 mb-6 md:mb-0 w-1/5">
-                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Hit</label>
-                    <select id="hit" name="hit" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
-                        <option value="thirty">30</option> 
-                        <option value="thirty-five">35</option> 
-                    </select>
-                </div>
+                {% for tool in tools %}
+                    <div class="pr-3 mb-6 md:mb-0 w-1/5">
+                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">{{ tool }}</label>
+                        <select id="hit" name="hit" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
+                            {% for value, display in form.fields.tool_grades.choices %}
+                                <option value="{{ values }}">{{ display }}</option> 
+                            {% endfor %}
+                        </select>
+                    </div>
                 <div class="mb-6 md:mb-0 w-1/5">
                     <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">FV</label>
                     <select id="hit-fv" name="hit-fv" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
-                        <option value="thirty">30</option> 
-                        <option value="thirty-five">35</option> 
+                        {% for value, display in form.fields.tool_grades.choices %}
+                            <option value="{{ values }}">{{ display }}</option> 
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="w-3/5 pl-6">
                     <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Comments</label>
                     <input type="text" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full">
                 </div>
+                {% endfor %}
             </div>
-
-            
-            Power 
-            <select id="power" name="power"> 
-                <option value="thirty">30</option> 
-                <option value="thirty-five">35</option> 
-            </select>
-            FV
-            <select id="power-fv" name="power-fv"> 
-                <option value="thirty">30</option> 
-                <option value="thirty-five">35</option> 
-            </select>
-            Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
-            Fielding
-            <select id="fielding" name="fielding"> 
-                <option value="thirty">30</option> 
-                <option value="thirty-five">35</option> 
-            </select>
-            FV
-            <select id="fielding-fv" name="fielding-fv"> 
-                <option value="thirty">30</option> 
-                <option value="thirty-five">35</option> 
-            </select>
-            Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
-            Throwing 
-            <select id="throwing" name="throwing"> 
-                <option value="thirty">30</option> 
-                <option value="thirty-five">35</option> 
-            </select>
-            FV
-            <select id="throwing-fv" name="throwing-fv"> 
-                <option value="thirty">30</option> 
-                <option value="thirty-five">35</option> 
-            </select>
-            Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
-            Run
-            <select id="run" name="run"> 
-                <option value="thirty">30</option> 
-                <option value="thirty-five">35</option> 
-            </select>
-            FV
-            <select id="run-fv" name="run-fv"> 
-                <option value="thirty">30</option> 
-                <option value="thirty-five">35</option> 
-            </select>
-            Comments <input type="text" class="p-4 bg-gray-100 border-0" placeholder="Comments">
     
             Overall Grade
             <select id="overall-grade" name="overall-grade"> 

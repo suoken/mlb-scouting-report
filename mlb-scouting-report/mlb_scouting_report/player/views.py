@@ -2,29 +2,28 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Player
 from .models import Hitter, Pitcher, Player
-from .forms import CreateHittingReport
+from .forms import HittingReportForm
 
 def playerHittingReport(request, slug):
     player = get_object_or_404(Player, slug=slug)
     return render(request, 'player/playerHittingReport.html', {'player': player})
 
 def createHittingReport(request):
+    tools = ["Hit", "Power", "Fielding", "Throwing", "Run"]
     if request.method == 'POST':
-        form = CreateHittingReport(request.POST)
+        form = HittingReportForm(request.POST)
 
         print(request.POST)
         print(form)
 
         if form.is_valid():
-            print("valid")
             form.save()
             return redirect('/')
         
     else:
-        print("not valid")
-        form = CreateHittingReport()
+        form = HittingReportForm()
 
-    return render(request, 'player/create-hitting-report.html', {'form': form})
+    return render(request, 'player/create-hitting-report.html', {'form': form, 'tools': tools})
 
 def playerPitchingReport(request, slug):
     return render(request, 'player/playerPitchingReport.html')

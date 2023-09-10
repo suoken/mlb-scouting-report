@@ -52,10 +52,9 @@ class Hitter(models.Model):
     class BattingPosition(models.TextChoices):
         RIGHT = "R", "Right"
         LEFT = "L", "Left"
-        SWITCH = "Switch"
+        SWITCH = "S", "Switch"
 
     class FieldPosition(models.TextChoices):
-        PITCHER = "P", "Pitcher"
         CATCHER = "C", "Catcher"
         FIRST_BASEMAN = "1B", "First Baseman"
         SECOND_BASEMAN = "2B", "Second Baseman"
@@ -101,9 +100,6 @@ class Hitter(models.Model):
         ordering = ("-report_date",)
 
     def __str__(self):
-        return self.player.name
-    
-    def getPlayerName(self):
         return self.player.name
 
 
