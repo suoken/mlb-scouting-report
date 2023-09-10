@@ -1,21 +1,103 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<h1>Player Hitting Report</h1>
-<div class="max-w-6xl mx-auto flex flex-wrap py-6 px6 xl:px-0">
-    <div class="images w-full mb-6 lg:mb-0 lg:w-3/5">
-        <img class="rounded-xl" src="1.jpg">
+<div class="max-w-6xl mt-4 mb-2 flex justify-between items-center mx-auto">
+    <h1 class="text-2xl text-white font-bold">View Hitting Report</h1>
+    <div class="flex space-x-4">
+        <a href="{% url 'createHittingReport' %}" class="rounded-md py-2 px-6 mx-2 text-white border-2">
+            Create New Report
+        </a>
+        <a href="/" class="rounded-md py-2 px-6 mx-2 text-white border-2">
+            Back to Reports
+        </a>
     </div>
-
-        <div class="information w-full lg:w2/5 lg:p-6">
-            <h1 class="text-2xl">{{ player.name }}</h1>
-            <p class="mt-1 text-gray-400">Related info</p>
-
-            <p class="mt-6 text-gray-700"> Description</p> 
-
-            <div class="mt-6 inline-block px-8 py-4 rounded-xl bg-purple-500 text-white">Score</div>
-        </div>
 </div>
+
+
+<div class="max-w-6xl mx-auto">
+    <div class="w-full bg-white p-6 rounded-xl">
+        <div class="flex-none w-1/4 mr-4">
+            <label class="block text-sm font-bold mb-1 text-gray-700">Player</label>
+            <div class="text-lg">{{ player.name }}</div>
+        </div>
+        <div class="flex-grow flex flex-wrap">
+            {% for label, value in stat_fields %}
+                <div class="w-1/6 mb-4 pr-1">
+                    <label class="block text-sm font-bold mb-1 text-gray-700">{{ label }}</label>
+                    <div class="text-lg">{{ value }}</div>
+                </div>
+            {% endfor %}
+        </div>
+        <hr/>
+        <div class="flex-none w-1/4 mr-4">
+            <label class="block text-sm font-bold mb-1 text-gray-700">Grade</label>
+            <div class="text-lg">{{ latest_hitter_record.overall_grade }}</div>
+        </div>
+        <div class="flex-none w-1/4 mr-4">
+            <label class="block text-sm font-bold mb-1 text-gray-700">Future</label>
+            <div class="text-lg">{{ latest_hitter_record.future_grade }}</div>
+        </div>
+        <div class="flex-none w-1/4 mr-4">
+            <label class="block text-sm font-bold mb-1 text-gray-700">Declarative Statement</label>
+            <div class="text-lg">{{ latest_hitter_record.declarative_statement }}</div>
+        </div>
+    </div>
+    
+
+    <div class="w-full bg-white p-6 rounded-xl mt-6">
+        <table class="w-full table-auto bg-white rounded-md overflow-hidden">
+            <tr>
+            <th class="bg-tbj-secondary text-white text-left px-8 py-4">Grade/FV</th>
+            <th class="bg-tbj-secondary text-white text-left px-8 py-4">Tool</th>
+            <th class="bg-tbj-secondary text-white text-left px-8 py-4">Comments</th>
+            </tr>
+            <tr class="hover:bg-gray-50">
+                <td class="border-b px-8 py-4 flex justify-between items-center">
+                    <div class="border rounded-md px-4 py-2">{{ latest_hitter_record.hit }}</div>
+                    <div class="border rounded-md px-4 py-2">{{ latest_hitter_record.hit_future_value }}</div>
+                </td>
+                <td class="border-b px-8 py-4">HIT</td>
+                <td class="border-b px-8 py-4">{{ latest_hitter_record.hit_comments }}</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+                <td class="border-b px-8 py-4 flex justify-between items-center">
+                    <div class="border rounded-md px-4 py-2">{{ latest_hitter_record.power }}</div>
+                    <div class="border rounded-md px-4 py-2">{{ latest_hitter_record.power_future_value }}</div>
+                </td>
+                <td class="border-b px-8 py-4">POWER</td>
+                <td class="border-b px-8 py-4">{{ latest_hitter_record.power_comments }}</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+                <td class="border-b px-8 py-4 flex justify-between items-center">
+                    <div class="border rounded-md px-4 py-2">{{ latest_hitter_record.fielding }}</div>
+                    <div class="border rounded-md px-4 py-2">{{ latest_hitter_record.fielding_future_value }}</div>
+                </td>
+                <td class="border-b px-8 py-4">FIELD</td>
+                <td class="border-b px-8 py-4">{{ latest_hitter_record.fielding_comments }}</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+                <td class="border-b px-8 py-4 flex justify-between items-center">
+                    <div class="border rounded-md px-4 py-2">{{ latest_hitter_record.throwing }}</div>
+                    <div class="border rounded-md px-4 py-2">{{ latest_hitter_record.throwing_future_value }}</div>
+                </td>
+                <td class="border-b px-8 py-4">THROW</td>
+                <td class="border-b px-8 py-4">{{ latest_hitter_record.throwing_comments }}</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+                <td class="border-b px-8 py-4 flex justify-between items-center">
+                    <div class="border rounded-md px-4 py-2">{{ latest_hitter_record.run }}</div>
+                    <div class="border rounded-md px-4 py-2">{{ latest_hitter_record.run_future_value }}</div>
+                </td>
+                <td class="border-b px-8 py-4">RUN</td>
+                <td class="border-b px-8 py-4">{{ latest_hitter_record.power_comments }}</td>
+            </tr>
+        </table>
+        <hr/>
+
+        <button class="bg-green-700 mt-4 rounded-md py-2 px-3 text-white hover:bg-green-900 font-semibold">Delete Report</button>
+    </div>
+</div>
+
 
 {% endblock %}
 
