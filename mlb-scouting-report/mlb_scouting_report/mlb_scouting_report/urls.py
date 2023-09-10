@@ -19,13 +19,13 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from core.views import homePage, pitchingReport
-from player.views import playerHittingReport, playerPitchingReport, createHittingReport
+from core.views import homePage
+from player.views import playerHittingReport, playerPitchingReport, createHittingReport, createPitchingReport
 
 urlpatterns = [
     path('', homePage, name='homePage'),
     path('create-hitting-report/', createHittingReport, name='createHittingReport'),
-    path('pitchingReport/', pitchingReport, name='pitchingReport'),
+    path('create-pitching-report/', createPitchingReport, name='createPitchingReport'),
     path('playerHittingReport/<slug:slug>', playerHittingReport, name='playerHittingReport'),
     path('playerPitchingReport/<slug:slug>', playerPitchingReport, name='playerPitchingReport'),
     path('admin/', admin.site.urls),

@@ -20,7 +20,3 @@ def homePage(request):
         entry['formatted_date'] = date_obj.strftime('%b %d %Y')
 
     return render(request, 'core/homepage.html', {'hitters': hitters, 'pitchers': pitchers, 'feed': feed_entries})
-
-def pitchingReport(request):
-    return render(request, 'core/pitchingreport.html')
-

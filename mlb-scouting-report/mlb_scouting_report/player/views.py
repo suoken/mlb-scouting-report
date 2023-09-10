@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Player
 from .models import Hitter, Pitcher, Player
-from .forms import HittingReportForm
+from .forms import HittingReportForm, PitchingReportForm
 
 def playerHittingReport(request, slug):
     player = get_object_or_404(Player, slug=slug)
@@ -27,3 +27,7 @@ def createHittingReport(request):
 
 def playerPitchingReport(request, slug):
     return render(request, 'player/playerPitchingReport.html')
+
+def createPitchingReport(request):
+    form = PitchingReportForm()
+    return render(request, 'player/create-pitching-report.html', {'form': form})

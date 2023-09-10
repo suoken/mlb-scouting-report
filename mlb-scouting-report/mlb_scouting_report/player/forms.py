@@ -1,5 +1,5 @@
 from django import forms
-from .models import Team, Hitter, ThrowingArm, ToolGrades
+from .models import Team, Hitter, ThrowingArm, ToolGrades, Pitcher
 
 class HittingReportForm(forms.ModelForm):
     name = forms.CharField(label="Player", max_length=255, required=True)
@@ -12,3 +12,12 @@ class HittingReportForm(forms.ModelForm):
     class Meta:
         model = Hitter
         fields = ["hit", "power", "fielding", "throwing", "run"]
+
+class PitchingReportForm(forms.ModelForm):
+    name = forms.CharField(label="Player", max_length=255, required=True)
+    team = forms.ModelChoiceField(label="Team", queryset=Team.objects.all())
+    throws = forms.ChoiceField(label="Throws", choices=ThrowingArm.choices)
+
+    class Meta:
+        model = Pitcher
+        fields = ["name", "team"]
