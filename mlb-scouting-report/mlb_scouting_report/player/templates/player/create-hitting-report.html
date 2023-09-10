@@ -1,11 +1,17 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<h1 class="mb-6 text-2xl text-white font-semibold">Create Hitting Report</h1>
+<div class="max-w-6xl flex justify-between mx-auto">
+    <h1 class="py-6 mt-4 text-2xl text-white font-semibold">Create Hitting Report</h1>
+    <a href="/" class="mt-4 rounded-md py-2 px-6 text-white border-2 inline-block">
+        Back to Reports
+    </a>
+    
+</div>
 
 <form method="post" action="." class="space-y-3">
     {% csrf_token %}
-    <div class="max-w-6xl mx-auto p-6">
+    <div class="max-w-6xl mx-auto">
         <div class="w-full flex bg-white p-6 rounded-xl">
             <div class="w-2/5">
                 <div> 
@@ -85,16 +91,27 @@
                 {% endfor %}
             </div>
     
-            Overall Grade
-            <select id="overall-grade" name="overall-grade"> 
-                <option value="thirty">30</option> 
-                <option value="thirty-five">35</option> 
-            </select>
-            Future Grade
-            <select id="future-grade" name="future-grade"> 
-                <option value="thirty">30</option> 
-                <option value="thirty-five">35</option> 
-            </select>
+            <hr/>
+            <div class="flex flex-wrap mb-6 w-full">
+                <div class="pr-3 mb-6 md:mb-0 w-1/5">
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Overall Grade</label>
+                    <select id="hit" name="hit" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
+                        {% for value, display in form.fields.tool_grades.choices %}
+                            <option value="{{ values }}">{{ display }}</option> 
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-6 md:mb-0 w-1/5">
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Future Grade</label>
+                    <select id="hit-fv" name="hit-fv" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
+                        {% for value, display in form.fields.tool_grades.choices %}
+                            <option value="{{ values }}">{{ display }}</option> 
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <hr/>
+            
     
             {% if form.errors %}
                 {% for field in form %}
@@ -112,9 +129,7 @@
                 {% endfor %}
             {% endif %}
     
-            <button class="bg-green-700 rounded-xl py-4 px-6 text-white hover:bg-green-900">
-                <a href="#">Submit</a>
-            </button>
+            <button class="bg-green-700 mt-4 rounded-md py-2 px-3 text-white hover:bg-green-900 font-semibold">Submit</button>
         </div>
 
     </div>
