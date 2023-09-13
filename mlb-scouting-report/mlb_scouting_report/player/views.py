@@ -47,17 +47,34 @@ def playerPitchingReport(request, slug):
                 })
 
 def createHittingReport(request):
-    tools = ["Hit", "Power", "Fielding", "Throwing", "Run"]
+    tools = ("Hit", "Power", "Fielding", "Throwing", "Run")    
     if request.method == 'POST':
         form = HittingReportForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('/')
-        
+        try:
+            if form.is_valid():
+                player_name = form.cleaned_data['player']
+                player_instance, _ = Player.objects.get_or_create(name=player_name)
+
+                hitter = form.save(commit=False)
+                hitter.player = player_instance
+                hitter.save()
+
+                return redirect('/')
+        except Exception as e:
+            print("Exception:", e)
+                
     else:
         form = HittingReportForm()
 
-    return render(request, 'player/create-hitting-report.html', {'form': form, 'tools': tools})
+    groups = [
+        (form['hit'], form['hit_future_value'], form['hit_comments']),
+        (form['power'], form['power_future_value'], form['power_comments']),
+        (form['fielding'], form['fielding_future_value'], form['fielding_comments']),
+        (form['throwing'], form['throwing_future_value'], form['throwing_comments']),
+        (form['run'], form['run_future_value'], form['run_comments'])
+    ]
+
+    return render(request, 'player/create-hitting-report.html', {'form': form, 'tools': tools, 'groups': groups})
 
 def createPitchingReport(request):
     form = PitchingReportForm()

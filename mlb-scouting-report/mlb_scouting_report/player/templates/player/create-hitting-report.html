@@ -14,46 +14,46 @@
         <div class="w-full flex bg-white p-6 rounded-xl">
             <div class="w-2/5">
                 <div> 
-                    <label class="block tracking-wide text-gray-700 font-bold mb-2">{{ form.name.label }}</label>
-                    <input type="text" name="{{ form.name.name }}" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full" placeholder="Last, First">
+                    <label class="block tracking-wide text-gray-700 font-bold mb-2" for="{{ form.player.id_for_label }}">{{ form.player.label }}</label>
+                    <input type="text" name="{{ form.player.name }}" id="{{ form.player.id_for_label }}" class="bg-gray-100 border-2 py-1  px-2 rounded-md w-full" placeholder="Last, First">
                 </div>
                 <div class="flex flex-wrap mb-2 w-full">
                     <div class="pr-3 mb-6 md:mb-0 w-1/4">
                         <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">{{ form.team.label }}</label>
-                        <select name="{{ form.team.code }}" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
+                        <select name="{{ form.team.name }}" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
                             {% for team in form.team.field.queryset %}
                                 <option value="{{ team.code }}">{{ team.code|upper }}</option> 
                             {% endfor %}
                         </select>
                     </div>
                     <div class="px-3 mb-6 md:mb-0 w-1/4">
-                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">{{ form.pos.label }}</label>
-                        <select name="{{ form.pos.value }}" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
-                            {% for value, display in form.fields.pos.choices %}
-                                <option value="{{ value }}">{{ value }}</option> 
-                            {% endfor %}
+                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4" for="{{ form.field_position.id_for_label }}">{{ form.field_position.label }}</label>
+                        <select name="{{ form.field_position.name }}" id="{{ form.field_position.id_for_label }}" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
+                        {% for value, display in form.field_position.field.choices %}
+                            <option value="{{ value }}" {% if form.field_position.value == value %}selected{% endif %}>{{ value }}</option> 
+                        {% endfor %}
                         </select>
                     </div>
                     <div class="px-3 mb-6 md:mb-0 w-1/4">
-                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">{{ form.bats.label }}</label>
-                        <select name="{{ form.bats.value }}" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
-                            {% for value, display in form.fields.bats.choices %}
-                                <option value="{{ value }}">{{ value }}</option> 
+                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4" for="{{ form.batting_position.id_for_label }}">{{ form.batting_position.label }}</label>
+                        <select name="{{ form.batting_position.name }}" id="{{ form.batting_position.id_for_label }}" class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
+                            {% for value, display in form.batting_position.field.choices %}
+                                <option value="{{ value }}" selected="{{ value }}">{{ value }}</option> 
                             {% endfor %}
                         </select>
                     </div>
                     <div class="pl-3 mb-6 md:mb-0 w-1/4">
-                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">{{ form.throws.label }}</label>
-                        <select name="{{ forms.throws.value }}" class="text-left bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
-                            {% for value, display in form.fields.throws.choices %}
-                                <option value="{{ value }}">{{ value }}</option> 
+                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4" for="{{ form.throwing_arm.id_for_label }}">{{ form.throwing_arm.label }}</label>
+                        <select name="{{ form.throwing_arm.name }}" id="{{ form.throwing_arm.id_for_label }}"class="text-left bg-gray-100 border-2 py-1 pr-4 rounded-md w-full"> 
+                            {% for value, display in form.throwing_arm.field.choices %}
+                                <option value="{{ value }}" selected="{{ value }}">{{ value }}</option>
                             {% endfor %}
                         </select>
                     </div>
                 </div>
                 <div>
                     <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Report Date</label>
-                    <input type="date" id="start" name="report-date" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full" value="2023-09-08" min="2018-01-01" max="2023-09-08" /> 
+                    <input type="date" name="{{ form.report_date.name }}" id="{{ form.report_date.id_for_label }}" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full" value="2023-09-08" min="2018-01-01" max="2023-09-08" /> 
                 </div>
             </div>
 
@@ -66,45 +66,41 @@
 
         <div class="w-full bg-white p-6 rounded-xl mt-6">
             <div class="flex flex-wrap mb-2 w-full">
-                {% for tool in tools %}
-                    <div class="pr-3 mb-6 md:mb-0 w-1/5">
-                        <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">{{ tool }}</label>
-                        <select id="hit" name="hit" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
-                            {% for value, display in form.fields.tool_grades.choices %}
-                                <option value="{{ values }}">{{ display }}</option> 
-                            {% endfor %}
-                        </select>
-                    </div>
-                <div class="mb-6 md:mb-0 w-1/5">
-                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">FV</label>
-                    <select id="hit-fv" name="hit-fv" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
-                        {% for value, display in form.fields.tool_grades.choices %}
-                            <option value="{{ values }}">{{ display }}</option> 
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="w-3/5 pl-6">
-                    <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Comments</label>
-                    <input type="text" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full">
-                </div>
+                {% for group in groups %}
+                    {% for field in group %}
+                        {% if field.field.choices %}
+                            <div class="pr-3 mb-6 md:mb-0 w-1/5">
+                                <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                <select name="{{ field.name }}" id="{{ field.id_for_label }}" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
+                                        {% for value, display in field.field.choices %}
+                                            <option value="{{ value }}">{{ display }}</option> 
+                                        {% endfor %}
+                                </select>
+                            </div>
+                        {% else %}
+                            <div class="w-3/5 pl-6">
+                                <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Comments</label>
+                                <input type="text" value="{{ form.tool.comment }}" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full">
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
             </div>
-    
             <hr/>
             <div class="flex flex-wrap mb-6 w-full">
                 <div class="pr-3 mb-6 md:mb-0 w-1/5">
                     <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Overall Grade</label>
-                    <select id="hit" name="hit" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
-                        {% for value, display in form.fields.tool_grades.choices %}
-                            <option value="{{ values }}">{{ display }}</option> 
+                    <select name="{{ form.overall_grade.name }}" id="{{ form.overall_grade.id_for_label }}" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
+                        {% for value, display in form.fields.overall_grade.choices %}
+                            <option value="{{ value }}">{{ display }}</option> 
                         {% endfor %}
                     </select>
                 </div>
                 <div class="mb-6 md:mb-0 w-1/5">
                     <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Future Grade</label>
-                    <select id="hit-fv" name="hit-fv" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
-                        {% for value, display in form.fields.tool_grades.choices %}
-                            <option value="{{ values }}">{{ display }}</option> 
+                    <select name="{{ form.future_grade.name }}" id="{{ form.future_grade.id_for_label }}" class="bg-gray-100 border-2 py-1 pr-6 rounded-md w-full"> 
+                        {% for value, display in form.fields.future_grade.choices %}
+                            <option value="{{ value }}">{{ display }}</option> 
                         {% endfor %}
                     </select>
                 </div>
@@ -116,7 +112,7 @@
                 {% for field in form %}
                     {% for error in field.errors %}
                         <div class="p-6 bg-red-200 text-red-800 rounded-xl">
-                            <p>{{ error|escape }}</p>
+                            <p>{{ error|escape }} {{field.name}}</p>
                         </div>
                     {% endfor %}
                 {% endfor %}

@@ -102,7 +102,6 @@ class Hitter(models.Model):
     def __str__(self):
         return self.player.name
 
-
 class Pitcher(models.Model):
     """
     Represents a baseball pitcher with various skill ratings and assessments
