@@ -53,7 +53,8 @@ def createHittingReport(request):
         try:
             if form.is_valid():
                 player_name = form.cleaned_data['player']
-                player_instance, _ = Player.objects.get_or_create(name=player_name)
+                team_name = form.cleaned_data['team']
+                player_instance, _ = Player.objects.get_or_create(name=player_name, team=team_name)
 
                 hitter = form.save(commit=False)
                 hitter.player = player_instance

@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
+from django.utils.text import slugify
 
 class ThrowingArm(models.TextChoices):
     RIGHT = "R", "Right"
@@ -39,6 +40,12 @@ class Player(models.Model):
 
     class Meta:
         ordering = ("-name",)
+
+    def save(self, *args, **kwargs):
+        # Generate slug from name if it doesn't exist
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
     
     def __str__(self):
         return self.name
