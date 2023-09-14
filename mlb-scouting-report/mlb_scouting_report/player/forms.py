@@ -61,4 +61,8 @@ class PitchForm(forms.ModelForm):
         model = Pitch
         fields = ['pitch_type', 'velocity_low', 'velocity_high', 'grade', 'pitch_future_value', 'comments']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ""
+
 PitchFormSet = inlineformset_factory(Pitcher, Pitch, form=PitchForm, extra=4, can_delete=False)
