@@ -34,7 +34,12 @@ class HittingReportForm(forms.ModelForm):
     
     class Meta:
         model = Hitter
-        exclude = ('report_date', 'player')
+        exclude = ('player', )
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ""
 
 class PitchingReportForm(forms.ModelForm):
     player = forms.CharField(label="Player", max_length=255, required=True)
