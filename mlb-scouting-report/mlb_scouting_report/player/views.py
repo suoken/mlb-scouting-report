@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Player
-from .models import Hitter, Pitcher, Player
-from .forms import HittingReportForm, PitchingReportForm
+from .models import Hitter, Pitcher, Player, Team
+from .forms import HittingReportForm, PitchingReportForm, PitchFormSet
 
 def playerHittingReport(request, slug):
     player = get_object_or_404(Player, slug=slug)
@@ -90,5 +90,36 @@ def updateHitter(request, slug):
     return render(request, 'player/update-hitting-report.html', {'form': form})
 
 def createPitchingReport(request):
-    form = PitchingReportForm()
-    return render(request, 'player/create-pitching-report.html', {'form': form})
+    if request.method == "POST":
+        form = PitchingReportForm(request.POST)
+
+        if form.is_valid():
+            player_name = form.cleaned_data['player']
+            team = form.cleaned_data['team']  # Assuming team is an actual Team instance after validation
+
+            # Try to get an existing player or create a new one
+            player_instance, _ = Player.objects.get_or_create(name=player_name, team=team)
+            
+            # Now, create a new Pitcher instance with the other fields from the form
+            pitcher_instance = Pitcher(
+                player=player_instance,
+                position=form.cleaned_data['position'],
+                throwing_arm=form.cleaned_data['throwing_arm'],
+                overall_grade=form.cleaned_data['overall_grade'],
+                future_grade=form.cleaned_data['future_grade']
+            )
+            pitcher_instance.save()
+            
+            # Now process the formset
+            formset = PitchFormSet(request.POST, instance=pitcher_instance)
+            if formset.is_valid():
+                formset.save()
+                return redirect('homePage')
+        else:
+             formset = PitchFormSet()
+
+    else:
+        form = PitchingReportForm()
+        formset = PitchFormSet()
+
+    return render(request, 'player/create-pitching-report.html', {'form': form, 'formset': formset})

@@ -163,7 +163,7 @@ class Pitch(models.Model):
     velocity_high = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(120)])
     grade = models.IntegerField(choices=ToolGrades.choices)
     pitch_future_value = models.IntegerField(choices=ToolGrades.choices)
-    comments = models.TextField(max_length=1024)
+    comments = models.CharField(max_length=255)
 
     def clean(self):
         if self.velocity_low > self.velocity_high:

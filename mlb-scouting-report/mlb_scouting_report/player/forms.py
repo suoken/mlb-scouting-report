@@ -1,5 +1,6 @@
 from django import forms
-from .models import Team, Hitter, ThrowingArm, ToolGrades, Pitcher, Pitch, Player
+from .models import Team, Hitter, ThrowingArm, ToolGrades, Pitcher, Pitch
+from django.forms import inlineformset_factory
 
 class HittingReportForm(forms.ModelForm):
     player = forms.CharField(label="Player", required=True, max_length=255)
@@ -36,14 +37,28 @@ class HittingReportForm(forms.ModelForm):
         exclude = ('report_date', 'player')
 
 class PitchingReportForm(forms.ModelForm):
-    name = forms.CharField(label="Player", max_length=255, required=True)
-    team = forms.ModelChoiceField(label="Team", queryset=Team.objects.all())
-    pos = forms.ChoiceField(label="Pos", choices=Pitcher.PitchingPositions.choices)
-    throws = forms.ChoiceField(label="Throws", choices=ThrowingArm.choices)
-    pitches = forms.ChoiceField(label="Pitch", choices=Pitch.PitchType.choices)
+    player = forms.CharField(label="Player", max_length=255, required=True)
+    team = forms.ModelChoiceField(label="Team", queryset=Team.objects.all(), to_field_name="code")
+    position = forms.ChoiceField(label="Pos", choices=Pitcher.PitchingPositions.choices)
+    throwing_arm = forms.ChoiceField(label="Throws", choices=ThrowingArm.choices)
 
-    tool_grades = forms.ChoiceField(label="Tool Grades", choices=ToolGrades.choices)
+    overall_grade = forms.ChoiceField(label="Overall Grade", choices=ToolGrades.choices)
+    future_grade = forms.ChoiceField(label="Future Grade", choices=ToolGrades.choices)
 
     class Meta:
         model = Pitcher
-        fields = ["name", "team"]
+        fields = ['team', 'position', 'throwing_arm', 'overall_grade', 'future_grade']
+        exclude = ('report_date', 'player')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ""
+
+class PitchForm(forms.ModelForm):
+    pitch_type = forms.ChoiceField(label="Pitch", choices=Pitch.PitchType.choices)
+
+    class Meta:
+        model = Pitch
+        fields = ['pitch_type', 'velocity_low', 'velocity_high', 'grade', 'pitch_future_value', 'comments']
+
+PitchFormSet = inlineformset_factory(Pitcher, Pitch, form=PitchForm, extra=4, can_delete=False)
