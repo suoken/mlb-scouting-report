@@ -16,26 +16,32 @@
 
 <div class="max-w-6xl mx-auto">
     <div class="w-full bg-white p-6 rounded-xl">
-        <div class="flex-none w-1/4 mr-4">
-            <label class="block text-sm font-bold mb-1 text-gray-700">Player</label>
-            <div class="text-lg">{{ player.name }}</div>
+        <div class="flex justify-between mb-2">
+            <div class="flex-none w-1/4 mr-4">
+                <label class="block text-sm font-bold mb-1 text-gray-700">Player</label>
+                <div class="text-2xl font-bold">{{ player.name }}</div>
+            </div>
+            <div class="flex-grow flex flex-wrap">
+                {% for label, value in stat_fields %}
+                    <div class="w-1/6 mb-4 pr-4">
+                        <label class="block text-sm font-bold mb-1 text-gray-700">{{ label }}</label>
+                        <div class="text-lg">{{ value }}</div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-        <div class="flex-grow flex flex-wrap">
-            {% for label, value in stat_fields %}
-                <div class="w-1/6 mb-4 pr-1">
-                    <label class="block text-sm font-bold mb-1 text-gray-700">{{ label }}</label>
-                    <div class="text-lg">{{ value }}</div>
-                </div>
-            {% endfor %}
-        </div>
-        <hr/>
+        <hr class="mb-2"/>
         <div class="flex-none w-1/4 mr-4">
             <label class="block text-sm font-bold mb-1 text-gray-700">Grade</label>
-            <div class="text-lg">{{ latest_hitter_record.overall_grade }}</div>
+            <div class="bg-tbj-primary w-16 h-16 flex items-center justify-center text-white font-bold text-lg">
+                {{ latest_hitter_record.overall_grade }}
+            </div>
         </div>
         <div class="flex-none w-1/4 mr-4">
             <label class="block text-sm font-bold mb-1 text-gray-700">Future</label>
-            <div class="text-lg">{{ latest_hitter_record.future_grade }}</div>
+            <div class="bg-tbj-primary w-16 h-16 flex items-center justify-center text-white font-bold text-lg">
+                {{ latest_hitter_record.future_grade }}
+            </div>
         </div>
         <div class="flex-none w-1/4 mr-4">
             <label class="block text-sm font-bold mb-1 text-gray-700">Declarative Statement</label>
