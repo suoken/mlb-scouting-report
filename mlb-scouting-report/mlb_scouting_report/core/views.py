@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import datetime
 import requests
 import xml.etree.ElementTree as ET
@@ -37,3 +37,8 @@ def homePage(request):
     feed_entries = feed_entries[:4]
 
     return render(request, 'core/homepage.html', {'hitters': hitters, 'pitchers': pitchers, 'feed': feed_entries})
+
+def deleteHitter(request, slug):
+    hitter = Hitter.objects.get(player__slug=slug)
+    hitter.delete()
+    return redirect('homePage')

@@ -19,7 +19,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from core.views import homePage
+from core.views import homePage, deleteHitter
 from player.views import playerHittingReport, playerPitchingReport, createHittingReport, createPitchingReport
 
 urlpatterns = [
@@ -29,4 +29,5 @@ urlpatterns = [
     path('player-hitting-report/<slug:slug>', playerHittingReport, name='playerHittingReport'),
     path('player-pitching-report/<slug:slug>', playerPitchingReport, name='playerPitchingReport'),
     path('admin/', admin.site.urls),
+    path('delete/<slug:slug>', deleteHitter, name='delete_hitter')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

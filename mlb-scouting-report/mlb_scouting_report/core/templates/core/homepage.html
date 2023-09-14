@@ -35,7 +35,7 @@
         <td class="border-b px-8 py-4">{{ hitter.throwing }}</td>
         <td class="border-b px-8 py-4">{{ hitter.run }}</td>
         <td class="border-b px-8 py-4">{{ hitter.overall_grade }}</td>
-        <td class="border-b px-8 py-4">Edit, Delete</td>
+        <td class="border-b px-8 py-4">Edit, <a href="/delete/{{ hitter.player.slug }}">Delete</a></td>
         </tr>
         {% endfor %}
     </table>
