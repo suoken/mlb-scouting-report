@@ -77,6 +77,18 @@ def createHittingReport(request):
 
     return render(request, 'player/create-hitting-report.html', {'form': form, 'tools': tools, 'groups': groups})
 
+def updateHitter(request, slug):
+    hitter_instance = get_object_or_404(Hitter, player__slug=slug)
+    if request.method == "POST":
+        form = HittingReportForm(request.POST, instance=hitter_instance)
+        if form.is_valid():
+            form.save()
+            return redirect('homePage')
+    else:
+        form = HittingReportForm(instance=hitter_instance)
+    
+    return render(request, 'player/update-hitting-report.html', {'form': form})
+
 def createPitchingReport(request):
     form = PitchingReportForm()
     return render(request, 'player/create-pitching-report.html', {'form': form})
