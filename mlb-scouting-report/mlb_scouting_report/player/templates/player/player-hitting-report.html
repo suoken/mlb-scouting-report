@@ -16,12 +16,12 @@
 
 <div class="max-w-7xl mx-auto">
     <div class="w-full bg-white p-6 rounded-xl">
-        <div class="flex justify-between mb-2 w-full">
+        <div class="flex mb-2 w-full">
             <div class="w-1/4 mr-4">
                 <label class="block text-sm font-bold mb-1 text-tbj-primary">Player</label>
                 <div class="text-2xl font-bold">{{ player.name }}</div>
             </div>
-            <div class="flex-grow flex flex-wrap">
+            <div class="flex-grow flex flex-wrap justify-end">
                 {% for label, value in stat_fields %}
                     <div class="w-1/8 mb-4 pr-4">
                         <label class="block text-sm font-bold mb-1 text-tbj-primary">{{ label }}</label>
@@ -53,58 +53,62 @@
     </div>
     
 
-    <div class="w-full bg-white p-6 rounded-xl mt-6">
-        <table class="w-full table-auto bg-white rounded-md overflow-hidden">
-            <tr>
-            <th class="bg-tbj-secondary text-white text-left px-8 py-4">Grade / FV</th>
-            <th class="bg-tbj-secondary text-white text-left px-8 py-4">Tool</th>
-            <th class="bg-tbj-secondary text-white text-left px-8 py-4">Comments</th>
-            </tr>
-            <tr>
-                <td class="border-b px-6 py-4 flex items-center">
-                    <div class="bg-tbj-primary text-white border rounded-md px-4 py-2 ">{{ latest_hitter_record.hit }}</div>
-                    <div class="bg-tbj-primary text-white border rounded-md px-4 py-2">{{ latest_hitter_record.hit_future_value }}</div>
-                </td>
-                <td class="border-b px-8 py-4">HIT</td>
-                <td class="border-b px-8 py-4">{{ latest_hitter_record.hit_comments }}</td>
-            </tr>
-            <tr class="bg-tbj-offset">
-                <td class="border-b px-6 py-4 flex items-center">
-                    <div class="bg-tbj-primary text-white border rounded-md px-4 py-2">{{ latest_hitter_record.power }}</div>
-                    <div class="bg-tbj-primary text-white border rounded-md px-4 py-2">{{ latest_hitter_record.power_future_value }}</div>
-                </td>
-                <td class="border-b px-8 py-4">POWER</td>
-                <td class="border-b px-8 py-4">{{ latest_hitter_record.power_comments }}</td>
-            </tr>
-            <tr>
-                <td class="border-b px-6 py-4 flex items-center">
-                    <div class="bg-tbj-primary text-white border rounded-md px-4 py-2">{{ latest_hitter_record.fielding }}</div>
-                    <div class="bg-tbj-primary text-white border rounded-md px-4 py-2">{{ latest_hitter_record.fielding_future_value }}</div>
-                </td>
-                <td class="border-b px-8 py-4">FIELD</td>
-                <td class="border-b px-8 py-4">{{ latest_hitter_record.fielding_comments }}</td>
-            </tr>
-            <tr class="bg-tbj-offset">
-                <td class="border-b px-6 py-4 flex items-center">
-                    <div class="bg-tbj-primary text-white border rounded-md px-4 py-2">{{ latest_hitter_record.throwing }}</div>
-                    <div class="bg-tbj-primary text-white border rounded-md px-4 py-2">{{ latest_hitter_record.throwing_future_value }}</div>
-                </td>
-                <td class="border-b px-8 py-4">THROW</td>
-                <td class="border-b px-8 py-4">{{ latest_hitter_record.throwing_comments }}</td>
-            </tr>
-            <tr>
-                <td class="border-b px-6 py-4 flex items-center">
-                    <div class="bg-tbj-primary text-white border rounded-md px-4 py-2">{{ latest_hitter_record.run }}</div>
-                    <div class="bg-tbj-primary text-white border rounded-md px-4 py-2">{{ latest_hitter_record.run_future_value }}</div>
-                </td>
-                <td class="border-b px-8 py-4">RUN</td>
-                <td class="border-b px-8 py-4">{{ latest_hitter_record.power_comments }}</td>
-            </tr>
+    <div class="w-full bg-white rounded-xl mt-6">
+        <table class="w-full table-auto bg-white rounded-xl overflow-hidden text-sm">
+            <thead>
+                <tr>
+                    <th class="bg-tbj-secondary text-white text-left px-4 py-2 w-32">Grade / FV</th>
+                    <th class="bg-tbj-secondary text-white text-left w-24">Tool</th>
+                    <th class="bg-tbj-secondary text-white text-left">Comments</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="border-b flex items-center px-4 py-1">
+                        <div class="bg-tbj-primary text-white border font-bold rounded-md px-1.5 py-0.5 mr-1">{{ latest_hitter_record.hit }}</div>
+                        <div class="bg-tbj-primary text-white border font-bold rounded-md px-1.5 py-0.5 mr-1">{{ latest_hitter_record.hit_future_value }}</div>
+                    </td>
+                    <td class="border-b font-bold">HIT</td>
+                    <td class="border-b">{{ latest_hitter_record.hit_comments }}</td>
+                </tr>
+                <tr class="bg-tbj-offset">
+                    <td class="border-b flex items-center px-4 py-1">
+                        <div class="bg-tbj-primary text-white border font-bold rounded-md px-1.5 py-0.5 mr-1">{{ latest_hitter_record.power }}</div>
+                        <div class="bg-tbj-primary text-white border font-bold rounded-md px-1.5 py-0.5 mr-1">{{ latest_hitter_record.power_future_value }}</div>
+                    </td>
+                    <td class="border-b font-bold">POWER</td>
+                    <td class="border-b">{{ latest_hitter_record.power_comments }}</td>
+                </tr>
+                <tr>
+                    <td class="border-b flex items-center px-4 py-1">
+                        <div class="bg-tbj-primary text-white border font-bold rounded-md px-1.5 py-0.5 mr-1">{{ latest_hitter_record.fielding }}</div>
+                        <div class="bg-tbj-primary text-white border font-bold rounded-md px-1.5 py-0.5 mr-1">{{ latest_hitter_record.fielding_future_value }}</div>
+                    </td>
+                    <td class="border-b font-bold">FIELD</td>
+                    <td class="border-b">{{ latest_hitter_record.fielding_comments }}</td>
+                </tr>
+                <tr class="bg-tbj-offset">
+                    <td class="border-b flex items-center px-4 py-1">
+                        <div class="bg-tbj-primary text-white border font-bold rounded-md px-1.5 py-0.5 mr-1">{{ latest_hitter_record.throwing }}</div>
+                        <div class="bg-tbj-primary text-white border font-bold rounded-md px-1.5 py-0.5 mr-1">{{ latest_hitter_record.throwing_future_value }}</div>
+                    </td>
+                    <td class="border-b font-bold">THROW</td>
+                    <td class="border-b">{{ latest_hitter_record.throwing_comments }}</td>
+                </tr>
+                <tr>
+                    <td class="border-b flex items-center px-4 py-1">
+                        <div class="bg-tbj-primary text-white border font-bold rounded-md px-1.5 py-0.5 mr-1">{{ latest_hitter_record.run }}</div>
+                        <div class="bg-tbj-primary text-white border font-bold rounded-md px-1.5 py-0.5 mr-1">{{ latest_hitter_record.run_future_value }}</div>
+                    </td>
+                    <td class="border-b font-bold">RUN</td>
+                    <td class="border-b">{{ latest_hitter_record.power_comments }}</td>
+                </tr>
+            </tbody>
         </table>
         <hr/>
         
-        <div class="w-full bg-white flex justify-end">
-            <a href="#" class="bg-tbj-danger mt-4 rounded-md py-2 px-3 text-white hover:bg-red-900 font-semibold">Delete Report</a>
+        <div class="w-full bg-white flex rounded-xl justify-end">
+            <a href="#" class="bg-tbj-danger m-4 rounded-md py-2 px-3 text-white hover:bg-red-900 font-semibold">Delete Report</a>
         </div>
     </div>
 </div>

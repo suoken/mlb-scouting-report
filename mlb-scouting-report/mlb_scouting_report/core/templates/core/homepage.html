@@ -75,8 +75,20 @@
             <td class="border-b text-center w-12">{{ pitcher.player.team }}</td>
             <td class="border-b text-center w-12">{{ pitcher.position }}</td>
             <td class="border-b font-bold text-tbj-primary"><a href="{% url 'playerPitchingReport' pitcher.player.slug %}">{{ pitcher.player.name }}</a></td>
-            <td class="border-b w-14 text-center">###</td>
-            <td class="border-b w-14 text-center">###</td>
+            <td class="border-b w-14 text-center">
+            {% for pitch in pitcher.pitches.all %}
+                {% if pitch.pitch_type == pitch.PitchType.FOUR_SEAM_FASTBALL %}
+                    {{ pitch.velocity_high }}
+                {% endif %}
+            {% endfor %}
+            </td>
+            <td class="border-b w-14 text-center">
+                {% for pitch in pitcher.pitches.all %}
+                    {% if pitch.pitch_type == pitch.PitchType.FOUR_SEAM_FASTBALL %}
+                        {{ pitch.velocity_low }}-{{ pitch.velocity_high }}
+                    {% endif %}
+                {% endfor %}
+            </td>
             <td class="border-b text-center font-bold w-12 pl-4 pr-16">{{ pitcher.overall_grade }}</td>
             <td class="border-b w-24">
                 <a href="{% url 'updatePitcher' pitcher.player.slug %}" class="text-tbj-primary pr-2">Edit</a>
