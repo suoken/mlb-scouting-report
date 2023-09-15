@@ -83,17 +83,18 @@
 </div>
 
 <div class="max-w-7xl mx-auto py-2 px-6 xl:px-0">
-    <div class="players flex items-center flex-wrap">
+    <div class="players flex flex-wrap">
         {% for entry in feed %}
-        <div class="w-1/4 md:w-1/4 xl:x-1/4 p-6">
-            <div class="max-w-sm rounded overflow-hidden bg-white">
-                <img class="w-full" src="{{ entry.image }}" alt="baseball image">
-                <div class="py-4">
-                    <a href="{{ entry.link }}"><div class="font-bold text-xl mb-2">{{ entry.title }}</div></a>
+        <div class="w-1/4 pr-4">
+            <div class="flex flex-col max-w-sm rounded overflow-hidden bg-white h-80">
+                <img class="w-full" src="{{ entry.image }}" alt="{{ entry.title }}">
+                <div class="px-4 py-2 flex-grow">
+                    <a href="{{ entry.link }}"><div class="font-bold text-xl text-tbj-primary hover:text-blue-800">{{ entry.title }}</div></a>
                 </div>
-                <div class="pt-4 pb-2">
-                    <span class="inline-block px-3 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2">{{ entry.author }}</span>
-                    <span class="inline-block px-3 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2">{{ entry.formatted_date }}</span>
+                <div class="px-4 py-2 mt-auto flex items-center">
+                    <span class="inline-block text-xs font-semibold text-gray-700 mr-2 mb-2">{{ entry.author }}</span>
+                    <span class="inline-block text-xs font-semibold text-gray-700 mr-2 mb-2"> &#x2022;</span>
+                    <span class="inline-block text-xs font-semibold text-gray-700 mr-2 mb-2">{{ entry.formatted_date }}</span>
                 </div>
             </div>
         </div>
