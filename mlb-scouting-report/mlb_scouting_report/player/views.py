@@ -77,15 +77,25 @@ def createHittingReport(request):
 
 def updateHitter(request, slug):
     hitter_instance = get_object_or_404(Hitter, player__slug=slug)
+    initial_data = {
+        'player': hitter_instance.player.name,
+        'team': hitter_instance.player.team
+    }
     if request.method == "POST":
         form = HittingReportForm(request.POST, instance=hitter_instance)
         if form.is_valid():
             form.save()
-            return redirect('homePage')
+            return redirect('/')
     else:
-        form = HittingReportForm(instance=hitter_instance)
+        form = HittingReportForm(instance=hitter_instance, initial=initial_data)
+
+    context = {
+        'form': form,
+        'fields_to_ignore': ["player", "team", "field_position", "batting_position", "throwing_arm", "report_date", "overall_grade", "future_grade", "declarative_statement"],
+        'is_editing': True if hitter_instance.id else False,
+    }
     
-    return render(request, 'player/update-hitting-report.html', {'form': form})
+    return render(request, 'player/create-hitting-report.html', context)
 
 def createPitchingReport(request):
     if request.method == "POST":
