@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<div class="max-w-7xl mt-4 flex justify-between items-center mx-auto">
+<div class="max-w-7xl mt-4 mb-2 flex justify-between items-center mx-auto">
     <h1 class="text-2xl text-white font-bold">Hitter Reports</h1>
     <a href="{% url 'createHittingReport' %}" class="rounded-md py-2 px-6 text-white border-2 inline-block">
         Create New Report
@@ -9,39 +9,43 @@
 </div>
 
 <div class="max-w-7xl mx-auto">
-    <table class="w-full mt-4 table-auto bg-white rounded-md overflow-hidden">
-        <tr>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">Date</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">Org</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">Pos</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">Player</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">Hit</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">Pow</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">Run</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">Field</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">Thr</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">OVR</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">Actions</th>
-        </tr>
-        {% for hitter in hitters %}
-        <tr class="hover:bg-gray-50">
-        <td class="border-b px-8 py-4">{{ hitter.report_date }}</td>
-        <td class="border-b px-8 py-4">{{ hitter.player.team }}</td>
-        <td class="border-b px-8 py-4">{{ hitter.field_position }}</td>
-        <td class="border-b px-8 py-4"><a href="{% url 'playerHittingReport' hitter.player.slug %}">{{ hitter.player.name }}</a></td>
-        <td class="border-b px-8 py-4">{{ hitter.hit }}</td>
-        <td class="border-b px-8 py-4">{{ hitter.power }}</td>
-        <td class="border-b px-8 py-4">{{ hitter.fielding }}</td>
-        <td class="border-b px-8 py-4">{{ hitter.throwing }}</td>
-        <td class="border-b px-8 py-4">{{ hitter.run }}</td>
-        <td class="border-b px-8 py-4">{{ hitter.overall_grade }}</td>
-        <td class="border-b px-8 py-4"><a href="{% url 'updateHitter' hitter.player.slug %}">Edit</a>, <a href="/delete/{{ hitter.player.slug }}">Delete</a></td>
-        </tr>
-        {% endfor %}
+    <table class="w-full table-auto bg-white rounded-md overflow-hidden text-sm">
+        <thead>
+            <tr>
+                <th class="bg-tbj-secondary text-white text-left px-4 py-2">Date</th>
+                <th class="bg-tbj-secondary text-white text-left">Org</th>
+                <th class="bg-tbj-secondary text-white text-left">Pos</th>
+                <th class="bg-tbj-secondary text-white text-left">Player</th>
+                <th class="bg-tbj-secondary text-white text-left">Hit</th>
+                <th class="bg-tbj-secondary text-white text-left">Pow</th>
+                <th class="bg-tbj-secondary text-white text-left">Run</th>
+                <th class="bg-tbj-secondary text-white text-left">Field</th>
+                <th class="bg-tbj-secondary text-white text-left">Thr</th>
+                <th class="bg-tbj-secondary text-white text-left">OVR</th>
+                <th class="bg-tbj-secondary text-white text-left">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for hitter in hitters %}
+            <tr class="{% if forloop.counter|divisibleby:2 %}bg-tbj-offset{% else %}bg-white{% endif %} hover:bg-gray-50">
+                <td class="border-b py-2 px-4">{{ hitter.report_date }}</td>
+                <td class="border-b">{{ hitter.player.team }}</td>
+                <td class="border-b">{{ hitter.field_position }}</td>
+                <td class="border-b font-bold text-tbj-primary"><a href="{% url 'playerHittingReport' hitter.player.slug %}">{{ hitter.player.name }}</a></td>
+                <td class="border-b">{{ hitter.hit }}</td>
+                <td class="border-b">{{ hitter.power }}</td>
+                <td class="border-b">{{ hitter.fielding }}</td>
+                <td class="border-b">{{ hitter.throwing }}</td>
+                <td class="border-b">{{ hitter.run }}</td>
+                <td class="border-b font-bold">{{ hitter.overall_grade }}</td>
+                <td class="border-b"><a href="{% url 'updateHitter' hitter.player.slug %}" class="text-tbj-primary">Edit</a> <a href="/delete/{{ hitter.player.slug }}" class="text-tbj-danger">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </div>
 
-<div class="max-w-7xl mt-4 flex justify-between items-center mx-auto">
+<div class="max-w-7xl mt-4 mb-2 flex justify-between items-center mx-auto">
     <h1 class="text-2xl text-white font-bold">Pitcher Reports</h1>
     <a href="{% url 'createPitchingReport' %}" class="rounded-md py-2 px-6 text-white border-2 inline-block">
         Create New Report
@@ -49,29 +53,32 @@
 </div>
 
 <div class="max-w-7xl mx-auto">
-    <table class="w-full mt-4 table-auto bg-white">
-        <tr>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">Date</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">Org</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">Pos</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">Player</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">FB</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">FB Velo</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">OVR</th>
-        <th class="bg-tbj-secondary text-white text-left px-8 py-4">Actions</th>
-        </tr>
+    <table class="w-full table-auto bg-white rounded-md overflow-hidden text-sm">
+        <thead>
+            <tr>
+                <th class="bg-tbj-secondary text-white text-left px-4 py-2">Date</th>
+                <th class="bg-tbj-secondary text-white text-left">Org</th>
+                <th class="bg-tbj-secondary text-white text-left">Pos</th>
+                <th class="bg-tbj-secondary text-white text-left">Player</th>
+                <th class="bg-tbj-secondary text-white text-left">FB</th>
+                <th class="bg-tbj-secondary text-white text-left">FB Velo</th>
+                <th class="bg-tbj-secondary text-white text-left">OVR</th>
+                <th class="bg-tbj-secondary text-white text-left">Actions</th>
+            </tr>
+        </thead>
+
         {% for pitcher in pitchers %}
-        <tr class="hover:bg-gray-50">
-        <td class="border-b px-8 py-4">{{ pitcher.report_date }}</td>
-        <td class="border-b px-8 py-4">{{ pitcher.player.team }}</td>
-        <td class="border-b px-8 py-4">{{ pitcher.position }}</td>
-        <td class="border-b px-8 py-4"><a href="{% url 'playerPitchingReport' pitcher.player.slug %}">{{ pitcher.player.name }}</a></td>
-        <td class="border-b px-8 py-4">###</td>
-        <td class="border-b px-8 py-4">###</td>
-        <td class="border-b px-8 py-4">{{ pitcher.overall_grade }}</td>
-        <td class="border-b px-8 py-4">
-            <a href="{% url 'updatePitcher' pitcher.player.slug %}">Edit</a>
-            <a href="/delete/{{ pitcher.player.slug }}">Delete</a>
+        <tr class="{% if forloop.counter|divisibleby:2 %}bg-tbj-offset{% else %}bg-white{% endif %} hover:bg-gray-50">
+        <td class="border-b px-4 py-2">{{ pitcher.report_date }}</td>
+        <td class="border-b">{{ pitcher.player.team }}</td>
+        <td class="border-b">{{ pitcher.position }}</td>
+        <td class="border-b font-bold text-tbj-primary"><a href="{% url 'playerPitchingReport' pitcher.player.slug %}">{{ pitcher.player.name }}</a></td>
+        <td class="border-b">###</td>
+        <td class="border-b">###</td>
+        <td class="border-b font-bold">{{ pitcher.overall_grade }}</td>
+        <td class="border-b">
+            <a href="{% url 'updatePitcher' pitcher.player.slug %}" class="text-tbj-primary">Edit</a>
+            <a href="/delete/{{ pitcher.player.slug }}" class="text-tbj-danger">Delete</a>
         </td>
         </tr>
         {% endfor %}
