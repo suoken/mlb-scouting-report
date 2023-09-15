@@ -16,59 +16,74 @@
 
 <div class="max-w-6xl mx-auto">
     <div class="w-full bg-white p-6 rounded-xl">
-        <div class="flex-none w-1/4 mr-4">
-            <label class="block text-sm font-bold mb-1 text-gray-700">Player</label>
-            <div class="text-lg">{{ player.name }}</div>
+        <div class="flex mb-2 w-full">
+            <div class="w-1/4 mr-4">
+                <label class="block text-sm font-bold mb-1 text-tbj-primary">Player</label>
+                <div class="text-2xl font-bold">{{ player.name }}</div>
+            </div>
+            <div class="flex-grow flex flex-wrap justify-end">
+                {% for label, value in stat_fields %}
+                    <div class="w-1/8 mb-4 pr-4">
+                        <label class="block text-sm font-bold mb-1 text-tbj-primary">{{ label }}</label>
+                        {{ value }}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-        <div class="flex-grow flex flex-wrap">
-            {% for label, value in stat_fields %}
-                <div class="w-1/6 mb-4 pr-1">
-                    <label class="block text-sm font-bold mb-1 text-gray-700">{{ label }}</label>
-                    <div class="text-lg">{{ value }}</div>
+        <hr class="mb-2"/>
+
+        <div class="flex">
+            <div class="flex-shrink-0 mr-1">
+                <label class="block text-sm font-bold mb-1">Grade</label>
+                <div class="bg-tbj-primary py-1 px-9 flex items-center justify-center text-white font-bold text-lg rounded-md">
+                    {{ latest_pitcher_record.overall_grade }}
                 </div>
-            {% endfor %}
-        </div>
-        <hr/>
-        <div class="flex-none w-1/4 mr-4">
-            <label class="block text-sm font-bold mb-1 text-gray-700">Grade</label>
-            <div class="text-lg">{{ latest_pitcher_record.overall_grade }}</div>
-        </div>
-        <div class="flex-none w-1/4 mr-4">
-            <label class="block text-sm font-bold mb-1 text-gray-700">Future</label>
-            <div class="text-lg">{{ latest_pitcher_record.future_grade }}</div>
-        </div>
-        <div class="flex-none w-1/4 mr-4">
-            <label class="block text-sm font-bold mb-1 text-gray-700">Declarative Statement</label>
-            <div class="text-lg">{{ latest_pitcher_record.declarative_statement }}</div>
+            </div>
+            <div class="flex-shrink-0 mr-4">
+                <label class="block text-sm font-bold mb-1">Future</label>
+                <div class="bg-tbj-primary py-1 px-9 flex items-center justify-center text-white font-bold text-lg rounded-md">
+                    {{ latest_pitcher_record.future_grade }}
+                </div>
+            </div>
+            <div class="flex-grow mr-4">
+                <label class="block text-sm font-bold mb-1">Declarative Statement</label>
+                <div class="text-sm">{{ latest_pitcher_record.declarative_statement }}</div>
+            </div>
         </div>
     </div>
     
 
-    <div class="w-full bg-white p-6 rounded-xl mt-6">
-        <table class="w-full table-auto bg-white rounded-md overflow-hidden">
-            <tr>
-            <th class="bg-tbj-secondary text-white text-left px-8 py-4">Grade/FV</th>
-            <th class="bg-tbj-secondary text-white text-left px-8 py-4">Pitch</th>
-            <th class="bg-tbj-secondary text-white text-left px-8 py-4">Velo (Low)</th>
-            <th class="bg-tbj-secondary text-white text-left px-8 py-4">Velo (High)</th>
-            <th class="bg-tbj-secondary text-white text-left px-8 py-4">Comments</th>
-            </tr>
-            {% for pitch in pitches %}
-            <tr class="hover:bg-gray-50">
-                <td class="border-b px-8 py-4 flex justify-between items-center">
-                    <div class="border rounded-md px-4 py-2">{{ pitch.grade }}</div>
-                    <div class="border rounded-md px-4 py-2">{{ pitch.pitch_future_value }}</div>
-                </td>
-                <td class="border-b px-8 py-4">{{ pitch.pitch_type }}</td>
-                <td class="border-b px-8 py-4">{{ pitch.velocity_low }}</td>
-                <td class="border-b px-8 py-4">{{ pitch.velocity_high }}</td>
-                <td class="border-b px-8 py-4">{{ pitch.comments }}</td>
-            </tr>
-            {% endfor %}
+    <div class="w-full bg-white rounded-xl mt-6">
+        <table class="w-full table-auto bg-white rounded-xl overflow-hidden text-sm">
+            <thead>
+                <tr>
+                    <th class="bg-tbj-secondary text-white text-left px-4 py-2">Grade / FV</th>
+                    <th class="bg-tbj-secondary text-white text-left">Pitch</th>
+                    <th class="bg-tbj-secondary text-white text-left">Velo (Low)</th>
+                    <th class="bg-tbj-secondary text-white text-left">Velo (High)</th>
+                    <th class="bg-tbj-secondary text-white text-left">Comments</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pitch in pitches %}
+                <tr class="{% if forloop.counter|divisibleby:2 %}bg-tbj-offset{% else %}bg-white{% endif %}">
+                    <td class="border-b flex items-center px-4 py-1">
+                        <div class="bg-tbj-primary text-white border font-bold rounded-md px-1.5 py-0.5 mr-1">{{ pitch.grade }}</div>
+                        <div class="bg-tbj-primary text-white border font-bold rounded-md px-1.5 py-0.5 ml-1">{{ pitch.pitch_future_value }}</div>
+                    </td>
+                    <td class="border-b">{{ pitch.pitch_type }}</td>
+                    <td class="border-b">{{ pitch.velocity_low }}</td>
+                    <td class="border-b">{{ pitch.velocity_high }}</td>
+                    <td class="border-b">{{ pitch.comments }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
         <hr/>
 
-        <button class="bg-green-700 mt-4 rounded-md py-2 px-3 text-white hover:bg-green-900 font-semibold">Delete Report</button>
+        <div class="w-full bg-white flex rounded-xl justify-end">
+            <a href="#" class="bg-tbj-danger m-4 rounded-md py-2 px-3 text-white hover:bg-red-900 font-semibold">Delete Report</a>
+        </div>   
     </div>
 </div>
 
