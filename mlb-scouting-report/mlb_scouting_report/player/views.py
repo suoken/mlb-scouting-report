@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Player
 from .models import Hitter, Pitcher, Player, Team
-from .forms import HittingReportForm, PitchingReportForm, PitchFormSet
+from .forms import HittingReportForm, PitchingReportForm, PitchFormSet, PitchFormEditSet
 
 def playerHittingReport(request, slug):
     player = get_object_or_404(Player, slug=slug)
@@ -128,3 +128,30 @@ def createPitchingReport(request):
         formset = PitchFormSet()
 
     return render(request, 'player/create-pitching-report.html', {'form': form, 'formset': formset})
+
+def updatePitcher(request, slug):
+    pitcher_instance = get_object_or_404(Pitcher, player__slug=slug)
+    initial_data = {
+        'player': pitcher_instance.player.name,
+        'team': pitcher_instance.player.team
+    }
+    if request.method == "POST":
+        form = PitchingReportForm(request.POST, instance=pitcher_instance)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    else:
+        print(pitcher_instance)
+        form = PitchingReportForm(instance=pitcher_instance, initial=initial_data)
+        formset = PitchFormEditSet(instance=pitcher_instance)
+
+
+    print(len(formset))
+    context = {
+        'form': form,
+        'fields_to_ignore': ["player", "team", "field_position", "batting_position", "throwing_arm", "report_date", "overall_grade", "future_grade", "declarative_statement"],
+        'is_editing': True if pitcher_instance.id else False,
+        'formset': formset
+    }
+    
+    return render(request, 'player/create-pitching-report.html', context)

@@ -1,14 +1,14 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<div class="max-w-6xl mt-4 flex justify-between items-center mx-auto">
+<div class="max-w-7xl mt-4 flex justify-between items-center mx-auto">
     <h1 class="text-2xl text-white font-bold">Hitter Reports</h1>
     <a href="{% url 'createHittingReport' %}" class="rounded-md py-2 px-6 text-white border-2 inline-block">
         Create New Report
     </a>
 </div>
 
-<div class="max-w-6xl mx-auto">
+<div class="max-w-7xl mx-auto">
     <table class="w-full mt-4 table-auto bg-white rounded-md overflow-hidden">
         <tr>
         <th class="bg-tbj-secondary text-white text-left px-8 py-4">Date</th>
@@ -41,14 +41,14 @@
     </table>
 </div>
 
-<div class="max-w-6xl mt-4 flex justify-between items-center mx-auto">
+<div class="max-w-7xl mt-4 flex justify-between items-center mx-auto">
     <h1 class="text-2xl text-white font-bold">Pitcher Reports</h1>
     <a href="{% url 'createPitchingReport' %}" class="rounded-md py-2 px-6 text-white border-2 inline-block">
         Create New Report
     </a>
 </div>
 
-<div class="max-w-6xl mx-auto">
+<div class="max-w-7xl mx-auto">
     <table class="w-full mt-4 table-auto bg-white">
         <tr>
         <th class="bg-tbj-secondary text-white text-left px-8 py-4">Date</th>
@@ -69,17 +69,20 @@
         <td class="border-b px-8 py-4">###</td>
         <td class="border-b px-8 py-4">###</td>
         <td class="border-b px-8 py-4">{{ pitcher.overall_grade }}</td>
-        <td class="border-b px-8 py-4">Edit, Delete</td>
+        <td class="border-b px-8 py-4">
+            <a href="{% url 'updatePitcher' pitcher.player.slug %}">Edit</a>
+            <a href="/delete/{{ pitcher.player.slug }}">Delete</a>
+        </td>
         </tr>
         {% endfor %}
     </table>
 </div>
 
-<div class="max-w-6xl mt-4 flex mx-auto">
+<div class="max-w-7xl mt-4 flex mx-auto">
     <h1 class="text-2xl text-white font-bold">MLB News</h1>
 </div>
 
-<div class="max-w-6xl mx-auto py-2 px-6 xl:px-0">
+<div class="max-w-7xl mx-auto py-2 px-6 xl:px-0">
     <div class="players flex items-center flex-wrap">
         {% for entry in feed %}
         <div class="w-1/4 md:w-1/4 xl:x-1/4 p-6">

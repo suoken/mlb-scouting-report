@@ -3,7 +3,7 @@
 
 {% block content %}
 {% with label_class="block tracking-wide text-gray-700 font-bold mb-2 mt-4" %}
-<div class="max-w-6xl mt-4 flex justify-between items-center mx-auto">
+<div class="max-w-7xl mt-4 flex justify-between items-center mx-auto">
     <h1 class="text-2xl text-white font-bold">Create Pitching Report</h1>
     <a href="/" class="rounded-md py-2 px-6 text-white border-2 inline-block">
         Back to Reports
@@ -13,7 +13,7 @@
 <form method="post" action="." class="space-y-3">
     {% csrf_token %}
     {{ formset.management_form }}
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-7xl mx-auto">
         <div class="w-full flex bg-white p-6 rounded-md">
             <div class="w-2/5">
                 <div> 
@@ -49,10 +49,11 @@
         <div class="w-full bg-white p-6 rounded-md mt-6">
              <div class="flex flex-wrap mb-2 w-full">
                 {% for pitch_form in formset %}
-                    <div class="pr-3 px-2 w-1/6">
+                    <div class="px-2 w-1/6">
                         {{ pitch_form.pitch_type|add_label_class:label_class }}
                         {{ pitch_form.pitch_type|add_class:"bg-gray-100 border-2 py-1 px-2 rounded-md w-full" }}
                     </div>
+                    
                     <div class="px-2 w-1/12">
                         <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Velo(low)</label>
                         {{ pitch_form.velocity_low|add_class:"bg-gray-100 border-2 rounded-md py-1 px-2 w-full" }}
@@ -69,7 +70,7 @@
                         {{ pitch_form.pitch_future_value|add_label_class:label_class }}
                         {{ pitch_form.pitch_future_value|add_class:"bg-gray-100 border-2 py-1 pr-6 rounded-md w-full" }}
                     </div>
-                    <div class="pl-6 w-2/6">
+                    <div class="px-2 w-1/3">
                         {{ pitch_form.comments|add_label_class:label_class }}
                         {{ pitch_form.comments|add_class:"bg-gray-100 border-2 py-1 px-2 rounded-md w-full"}}
                     </div>
@@ -78,12 +79,11 @@
     
             <hr/>
             <div class="flex flex-wrap mb-6 w-full">
-                <div class="pr-3 mb-6 md:mb-0 w-1/5">
+                <div class="px-2 w-1/6">
                     {{ form.overall_grade|add_label_class:label_class }}
                     {% render_field form.overall_grade class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full" %}
-
                 </div>
-                <div class="mb-6 md:mb-0 w-1/5">
+                <div class="px-2 w-1/6">
                     {{ form.future_grade|add_label_class:label_class }}
                     {% render_field form.future_grade class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full" %}
                 </div>

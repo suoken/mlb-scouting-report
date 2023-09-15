@@ -71,3 +71,4 @@ class PitchForm(forms.ModelForm):
         self.label_suffix = ""
 
 PitchFormSet = inlineformset_factory(Pitcher, Pitch, form=PitchForm, extra=4, can_delete=False)
+PitchFormEditSet = inlineformset_factory(Pitcher, Pitch, form=PitchForm, extra=0, can_delete=False)
