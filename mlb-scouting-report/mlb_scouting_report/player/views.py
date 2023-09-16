@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Player
 from .models import Hitter, Pitcher, Player, Team
 from .forms import HittingReportForm, PitchingReportForm, PitchFormSet, PitchFormEditSet
+from datetime import date
 
 def playerHittingReport(request, slug):
     player = get_object_or_404(Player, slug=slug)
@@ -49,7 +50,7 @@ def playerPitchingReport(request, slug):
 def createHittingReport(request):
     if request.method == 'POST':
         form = HittingReportForm(request.POST)
-        print(request.POST)
+        
         try:
             if form.is_valid():
                 player_name = form.cleaned_data['player']
@@ -66,8 +67,10 @@ def createHittingReport(request):
                 
     else:
         form = HittingReportForm()
+        current_date = date.today()
     
     context = {
+        'current_date': current_date,
         'fields_to_ignore': ["player", "team", "field_position", "batting_position", "throwing_arm", "report_date", "overall_grade", "future_grade", "declarative_statement"],
         'form': form 
     }
@@ -88,11 +91,13 @@ def updateHitter(request, slug):
             return redirect('/')
     else:
         form = HittingReportForm(instance=hitter_instance, initial=initial_data)
+        current_date = date.today()
 
     context = {
         'form': form,
         'fields_to_ignore': ["player", "team", "field_position", "batting_position", "throwing_arm", "report_date", "overall_grade", "future_grade", "declarative_statement"],
         'is_editing': True if hitter_instance.id else False,
+        'current_date': current_date,
     }
     
     return render(request, 'player/create-hitting-report.html', context)
@@ -141,12 +146,10 @@ def updatePitcher(request, slug):
             form.save()
             return redirect('/')
     else:
-        print(pitcher_instance)
         form = PitchingReportForm(instance=pitcher_instance, initial=initial_data)
         formset = PitchFormEditSet(instance=pitcher_instance)
 
 
-    print(len(formset))
     context = {
         'form': form,
         'fields_to_ignore': ["player", "team", "field_position", "batting_position", "throwing_arm", "report_date", "overall_grade", "future_grade", "declarative_statement"],

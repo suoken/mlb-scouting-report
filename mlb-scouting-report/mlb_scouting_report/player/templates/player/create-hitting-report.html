@@ -13,7 +13,7 @@
 <form method="post" action="." class="space-y-3">
     {% csrf_token %}
     <div class="max-w-7xl mx-auto">
-        <div class="w-full flex bg-white p-6 rounded-xl">
+        <div class="w-full flex bg-white p-6 rounded-xl h-72">
             <div class="w-2/5">
                 <div> 
                     <label class="block tracking-wide text-gray-700 font-bold mb-2">{{ form.player.label }}</label>
@@ -39,13 +39,13 @@
                 </div>
                 <div>
                     <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Report Date</label>
-                    <input type="date" name="{{ form.report_date.name }}" id="{{ form.report_date.id_for_label }}" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full" value="2023-09-08" min="2018-01-01" max="2023-09-08" /> 
+                    <input type="date" name="{{ form.report_date.name }}" id="{{ form.report_date.id_for_label }}" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full" value="{{ form.report_date.value|default:current_date }}" min="2018-01-01" max="{{ current_date }}" />
                 </div>
             </div>
 
             <div class="w-3/5 pl-6">
                 <label class="block tracking-wide text-gray-700 font-bold mb-2">Declarative Statement</label>
-                <textarea name="declarative-statement" class="resize p-4 bg-gray-100 border-2 py-4 px-6 rounded-md w-full h-2/3" placeholder="Summarize this player's scouting look in a few brief sentences"></textarea>
+                {{ form.declarative_statement|add_class:"resize bg-gray-100 border-2 mb-4 p-4 rounded-md w-full h-5/6" }}
             </div>
         </div>
 
@@ -61,7 +61,7 @@
                         {% else %}
                             <div class="w-3/5 pl-6">
                                 {{ field|add_label_class:label_class }}
-                                {{ field|add_class:"bg-gray-100 border-2 py-1 pr-4 rounded-md w-full" }}
+                                {{ field|add_class:"bg-gray-100 border-2 py-1 px-2 rounded-md w-full" }}
                             </div>
                         {% endif %}
                     {% endif %}
@@ -71,11 +71,11 @@
             <div class="flex flex-wrap mb-6 w-full">
                 <div class="pr-3 mb-6 md:mb-0 w-1/5">
                     {{ form.overall_grade|add_label_class:label_class }}
-                    {{ form.overall_grade|add_class:"bg-gray-100 border-2 py-1 pr-6 rounded-md w-full" }}
+                    {{ form.overall_grade|add_class:"bg-gray-100 border-2 py-1 pr-4 rounded-md w-full" }}
                 </div>
-                <div class="mb-6 md:mb-0 w-1/5">
+                <div class="mb-6 md:mb-0 w-1/5 pr-3">
                     {{ form.future_grade|add_label_class:label_class }}
-                    {{ form.future_grade|add_class:"bg-gray-100 border-2 py-1 pr-6 rounded-md w-full" }}
+                    {{ form.future_grade|add_class:"bg-gray-100 border-2 py-1 pr-4 rounded-md w-full" }}
                 </div>
             </div>
             <hr/>

@@ -4,7 +4,7 @@ from django.forms import inlineformset_factory
 
 class HittingReportForm(forms.ModelForm):
     player = forms.CharField(label="Player", required=True, max_length=255)
-    team = forms.ModelChoiceField(label="Team", queryset=Team.objects.all(), to_field_name="code")
+    team = forms.ModelChoiceField(label="Team", queryset=Team.objects.all(), empty_label="Select", to_field_name="code")
     field_position = forms.ChoiceField(label="Pos", choices=Hitter.FieldPosition.choices)
     batting_position = forms.ChoiceField(label="Bats", choices=Hitter.BattingPosition.choices)
     throwing_arm = forms.ChoiceField(label="Throws", choices=ThrowingArm.choices)

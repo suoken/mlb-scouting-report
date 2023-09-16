@@ -4,8 +4,8 @@ from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 
 class ThrowingArm(models.TextChoices):
-    RIGHT = "R", "Right"
-    LEFT = "L", "Left"
+    RIGHT = "R", "R"
+    LEFT = "L", "L"
 
 class ToolGrades(models.IntegerChoices):
     """
@@ -57,20 +57,20 @@ class Hitter(models.Model):
     """
 
     class BattingPosition(models.TextChoices):
-        RIGHT = "R", "Right"
-        LEFT = "L", "Left"
-        SWITCH = "S", "Switch"
+        RIGHT = "R", "R"
+        LEFT = "L", "L"
+        SWITCH = "S", "S"
 
     class FieldPosition(models.TextChoices):
-        CATCHER = "C", "Catcher"
-        FIRST_BASEMAN = "1B", "First Baseman"
-        SECOND_BASEMAN = "2B", "Second Baseman"
-        THIRD_BASEMAN = "3B", "Third Baseman"
-        SHORTSTOP = "SS", "Shortstop"
-        LEFT_FIELD = "LF", "Left Field"
-        CENTER_FIELD = "CF", "Center Field"
-        RIGHT_FIELD = "RF", "Right Field"
-        DESIGNATED_HITTER = "DH", "Designated Hitter"
+        CATCHER = "C", "C"
+        FIRST_BASEMAN = "1B", "1B"
+        SECOND_BASEMAN = "2B", "2B"
+        THIRD_BASEMAN = "3B", "3B"
+        SHORTSTOP = "SS", "SS"
+        LEFT_FIELD = "LF", "LF"
+        CENTER_FIELD = "CF", "CF"
+        RIGHT_FIELD = "RF", "RF"
+        DESIGNATED_HITTER = "DH", "DH"
 
     player = models.ForeignKey(Player, related_name="hitters", on_delete=models.CASCADE)
 
@@ -114,9 +114,9 @@ class Pitcher(models.Model):
     Represents a baseball pitcher with various skill ratings and assessments
     """
     class PitchingPositions(models.TextChoices):
-        STARTING_PITCHER = "SP", "Starting Pitcher"
-        RELIEF_PITCHER = "RP", "Relief Pitcher"
-        CLOSING_PITCHER = "CL", "Closing Pitcher"
+        STARTING_PITCHER = "SP", "SP"
+        RELIEF_PITCHER = "RP", "RF"
+        CLOSING_PITCHER = "CL", "CP"
 
     player = models.ForeignKey(Player, related_name="pitchers", on_delete=models.CASCADE)
 
