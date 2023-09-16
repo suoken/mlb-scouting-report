@@ -58,11 +58,11 @@
                     
                     <div class="px-2 w-1/12">
                         <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Velo(low)</label>
-                        {{ pitch_form.velocity_low|add_class:dropdown_class }}
+                        {{ pitch_form.velocity_low|add_class:"bg-gray-100 border-2 py-1 rounded-md w-full" }}
                     </div>
                     <div class="px-2 w-1/12">
                         <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Velo(high)</label>
-                        {{ pitch_form.velocity_high|add_class:dropdown_class }}
+                        {{ pitch_form.velocity_high|add_class:"bg-gray-100 border-2 py-1 rounded-md w-full" }}
                     </div>
                     <div class="px-2 w-1/6">
                         {{ pitch_form.grade|add_label_class:label_class }}
@@ -83,11 +83,11 @@
             <div class="flex flex-wrap mb-6 w-full">
                 <div class="px-2 w-1/6">
                     {{ form.overall_grade|add_label_class:label_class }}
-                    {% render_field form.overall_grade class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full" %}
+                    {% render_field form.overall_grade class=dropdown_class %}
                 </div>
                 <div class="px-2 w-1/6">
                     {{ form.future_grade|add_label_class:label_class }}
-                    {% render_field form.future_grade class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full" %}
+                    {% render_field form.future_grade class=dropdown_class %}
                 </div>
             </div>
             <hr/>

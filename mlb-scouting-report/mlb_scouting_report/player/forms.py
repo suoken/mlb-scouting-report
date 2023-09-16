@@ -45,7 +45,7 @@ class HittingReportForm(forms.ModelForm):
 
 class PitchingReportForm(forms.ModelForm):
     player = forms.CharField(label="Player", max_length=255, required=True)
-    team = forms.ModelChoiceField(label="Team", queryset=Team.objects.all(), to_field_name="code")
+    team = forms.ModelChoiceField(label="Team", queryset=Team.objects.all(), empty_label="Select", to_field_name="code")
     position = forms.ChoiceField(label="Pos", choices=Pitcher.PitchingPositions.choices)
     throwing_arm = forms.ChoiceField(label="Throws", choices=ThrowingArm.choices)
     report_date = forms.DateField(label="Report Date")
@@ -65,6 +65,10 @@ class PitchingReportForm(forms.ModelForm):
 
 class PitchForm(forms.ModelForm):
     pitch_type = forms.ChoiceField(label="Pitch", choices=Pitch.PitchType.choices)
+    grade = forms.ChoiceField(label="Grade", choices=ToolGrades.choices)
+    pitch_future_value = forms.ChoiceField(label="Pitch Future Value", choices=ToolGrades.choices)
+    velocity_low = forms.IntegerField(widget=forms.NumberInput(attrs={'min': '0'}))
+    velocity_high = forms.IntegerField(widget=forms.NumberInput(attrs={'min': '0'}))
 
     class Meta:
         model = Pitch

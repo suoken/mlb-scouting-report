@@ -67,9 +67,7 @@ class Hitter(models.Model):
         SECOND_BASEMAN = "2B", "2B"
         THIRD_BASEMAN = "3B", "3B"
         SHORTSTOP = "SS", "SS"
-        LEFT_FIELD = "LF", "LF"
-        CENTER_FIELD = "CF", "CF"
-        RIGHT_FIELD = "RF", "RF"
+        OUTFIELD = "OF", "OF"
         DESIGNATED_HITTER = "DH", "DH"
 
     player = models.ForeignKey(Player, related_name="hitters", on_delete=models.CASCADE)
