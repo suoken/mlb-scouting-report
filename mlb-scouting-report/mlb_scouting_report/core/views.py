@@ -40,10 +40,14 @@ def homePage(request):
 
 def deleteHitter(request, slug):
     hitter = Hitter.objects.get(player__slug=slug)
+    player = hitter.player
     hitter.delete()
+    player.delete()
     return redirect('homePage')
 
 def pitcherHitter(request, slug):
     pitcher = Pitcher.objects.get(player__slug=slug)
+    player = pitcher.player
     pitcher.delete()
+    player.delete()
     return redirect('homePage')

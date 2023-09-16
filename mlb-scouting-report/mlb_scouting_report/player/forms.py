@@ -69,6 +69,7 @@ class PitchForm(forms.ModelForm):
     pitch_future_value = forms.ChoiceField(label="Pitch Future Value", choices=ToolGrades.choices)
     velocity_low = forms.IntegerField(widget=forms.NumberInput(attrs={'min': '0'}))
     velocity_high = forms.IntegerField(widget=forms.NumberInput(attrs={'min': '0'}))
+    comments = forms.CharField(label="Comments", required=False)
 
     class Meta:
         model = Pitch

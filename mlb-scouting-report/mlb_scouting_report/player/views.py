@@ -146,6 +146,9 @@ def createPitchingReport(request):
             if formset.is_valid():
                 formset.save()
                 return redirect('homePage')
+        
+            else:
+                print(formset.errors)
         else:
              formset = PitchFormSet()
 
@@ -186,13 +189,12 @@ def updatePitcher(request, slug):
                     return redirect('homePage')
                 else:
                     print(formset.errors)
+
         except Exception as e:
             print(e)
             
-    
     else:
         form = PitchingReportForm(instance=pitcher_instance, initial=initial_data)
-
 
     context = {
         'form': form,
@@ -201,5 +203,5 @@ def updatePitcher(request, slug):
         'formset': formset,
         'current_date': formatted_date
     }
-    
+
     return render(request, 'player/create-pitching-report.html', context)
