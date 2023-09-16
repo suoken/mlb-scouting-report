@@ -8,7 +8,7 @@ class HittingReportForm(forms.ModelForm):
     field_position = forms.ChoiceField(label="Pos", choices=Hitter.FieldPosition.choices)
     batting_position = forms.ChoiceField(label="Bats", choices=Hitter.BattingPosition.choices)
     throwing_arm = forms.ChoiceField(label="Throws", choices=ThrowingArm.choices)
-    report_date = forms.DateField()
+    report_date = forms.DateField(label="Report Date")
 
     hit = forms.ChoiceField(label="Hit", choices=ToolGrades.choices)
     hit_future_value = forms.ChoiceField(label="FV", choices=ToolGrades.choices)
@@ -55,7 +55,7 @@ class PitchingReportForm(forms.ModelForm):
     class Meta:
         model = Pitcher
         fields = ['team', 'position', 'throwing_arm', 'overall_grade', 'future_grade']
-        exclude = ('report_date', 'player')
+        exclude = ('player', )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

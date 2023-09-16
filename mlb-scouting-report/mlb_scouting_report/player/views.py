@@ -58,9 +58,10 @@ def playerPitchingReport(request, slug):
 def createHittingReport(request):
     current_date = date.today()
     formatted_date = current_date.strftime('%Y-%m-%d')
+
     if request.method == 'POST':
         form = HittingReportForm(request.POST)
-        print(request.POST)
+        
         try:
             if form.is_valid():
                 player_name = form.cleaned_data['player']
@@ -87,7 +88,6 @@ def createHittingReport(request):
     }
 
     return render(request, 'player/create-hitting-report.html', context)
-
 
 def updateHitter(request, slug):
     hitter_instance = get_object_or_404(Hitter, player__slug=slug)
@@ -122,7 +122,6 @@ def createPitchingReport(request):
 
     if request.method == "POST":
         form = PitchingReportForm(request.POST)
-        print(request.POST)
 
         if form.is_valid():
             player_name = form.cleaned_data['player']
@@ -135,11 +134,14 @@ def createPitchingReport(request):
                 position=form.cleaned_data['position'],
                 throwing_arm=form.cleaned_data['throwing_arm'],
                 overall_grade=form.cleaned_data['overall_grade'],
-                future_grade=form.cleaned_data['future_grade']
+                future_grade=form.cleaned_data['future_grade'],
+                report_date = form.cleaned_data['report_date']
             )
+
             pitcher_instance.save()
             
             formset = PitchFormSet(request.POST, instance=pitcher_instance)
+
             if formset.is_valid():
                 formset.save()
                 return redirect('homePage')
@@ -161,7 +163,8 @@ def updatePitcher(request, slug):
     pitcher_instance = get_object_or_404(Pitcher, player__slug=slug)
     initial_data = {
         'player': pitcher_instance.player.name,
-        'team': pitcher_instance.player.team
+        'team': pitcher_instance.player.team,
+        'report_date': pitcher_instance.report_date,
     }
 
     formset = PitchFormEditSet(instance=pitcher_instance)
@@ -169,11 +172,22 @@ def updatePitcher(request, slug):
     formatted_date = current_date.strftime('%Y-%m-%d')
 
     if request.method == "POST":
-        print(request.POST)
         form = PitchingReportForm(request.POST, instance=pitcher_instance)
-        if form.is_valid():
-            form.save()
-            return redirect('/')
+        
+        try:
+            if form.is_valid():
+                form.save()
+                formset = PitchFormEditSet(request.POST, instance=pitcher_instance)
+                
+                if formset.is_valid():
+                    formset.save()
+                    return redirect('homePage')
+                else:
+                    print(formset.errors)
+        except Exception as e:
+            print(e)
+            
+    
     else:
         form = PitchingReportForm(instance=pitcher_instance, initial=initial_data)
 
