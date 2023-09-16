@@ -56,16 +56,20 @@ def playerPitchingReport(request, slug):
     return render(request, 'player/player-pitching-report.html', context)
 
 def createHittingReport(request):
+    current_date = date.today()
+    formatted_date = current_date.strftime('%Y-%m-%d')
     if request.method == 'POST':
         form = HittingReportForm(request.POST)
-        
+        print(request.POST)
         try:
             if form.is_valid():
                 player_name = form.cleaned_data['player']
                 team_name = form.cleaned_data['team']
+                report_date_value = form.cleaned_data['report_date']
                 player_instance, _ = Player.objects.get_or_create(name=player_name, team=team_name)
 
                 hitter = form.save(commit=False)
+                hitter.report_date = report_date_value
                 hitter.player = player_instance
                 hitter.save()
 
@@ -75,8 +79,6 @@ def createHittingReport(request):
                 
     else:
         form = HittingReportForm()
-        current_date = date.today()
-        formatted_date = current_date.strftime('%Y-%m-%d')
     
     context = {
         'current_date': formatted_date,
@@ -120,6 +122,7 @@ def createPitchingReport(request):
 
     if request.method == "POST":
         form = PitchingReportForm(request.POST)
+        print(request.POST)
 
         if form.is_valid():
             player_name = form.cleaned_data['player']
@@ -166,6 +169,7 @@ def updatePitcher(request, slug):
     formatted_date = current_date.strftime('%Y-%m-%d')
 
     if request.method == "POST":
+        print(request.POST)
         form = PitchingReportForm(request.POST, instance=pitcher_instance)
         if form.is_valid():
             form.save()

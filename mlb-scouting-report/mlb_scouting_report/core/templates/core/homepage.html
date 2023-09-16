@@ -78,7 +78,7 @@
             <td class="border-b w-14 text-center">
             {% for pitch in pitcher.pitches.all %}
                 {% if pitch.pitch_type == pitch.PitchType.FOUR_SEAM_FASTBALL %}
-                    {{ pitch.velocity_high }}
+                    {{ pitch.grade }}
                 {% endif %}
             {% endfor %}
             </td>

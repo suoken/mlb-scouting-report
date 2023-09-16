@@ -8,6 +8,7 @@ class HittingReportForm(forms.ModelForm):
     field_position = forms.ChoiceField(label="Pos", choices=Hitter.FieldPosition.choices)
     batting_position = forms.ChoiceField(label="Bats", choices=Hitter.BattingPosition.choices)
     throwing_arm = forms.ChoiceField(label="Throws", choices=ThrowingArm.choices)
+    report_date = forms.DateField()
 
     hit = forms.ChoiceField(label="Hit", choices=ToolGrades.choices)
     hit_future_value = forms.ChoiceField(label="FV", choices=ToolGrades.choices)
