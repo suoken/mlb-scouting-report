@@ -9,6 +9,7 @@ class HittingReportForm(forms.ModelForm):
     batting_position = forms.ChoiceField(label="Bats", choices=Hitter.BattingPosition.choices)
     throwing_arm = forms.ChoiceField(label="Throws", choices=ThrowingArm.choices)
     report_date = forms.DateField(label="Report Date")
+    declarative_statement = forms.CharField(max_length=1024, widget=forms.Textarea(attrs={'placeholder': "Summarize this player's scouting look in a few brief sentences"}))
 
     hit = forms.ChoiceField(label="Hit", choices=ToolGrades.choices)
     hit_future_value = forms.ChoiceField(label="FV", choices=ToolGrades.choices)
@@ -48,6 +49,7 @@ class PitchingReportForm(forms.ModelForm):
     position = forms.ChoiceField(label="Pos", choices=Pitcher.PitchingPositions.choices)
     throwing_arm = forms.ChoiceField(label="Throws", choices=ThrowingArm.choices)
     report_date = forms.DateField(label="Report Date")
+    declarative_statement = forms.CharField(max_length=1024, widget=forms.Textarea(attrs={'placeholder': "Summarize this player's scouting look in a few brief sentences"}))
 
     overall_grade = forms.ChoiceField(label="Overall Grade", choices=ToolGrades.choices)
     future_grade = forms.ChoiceField(label="Future Grade", choices=ToolGrades.choices)

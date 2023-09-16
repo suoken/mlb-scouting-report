@@ -3,6 +3,7 @@
 
 {% block content %}
 {% with label_class="block tracking-wide text-gray-700 font-bold mb-2 mt-4" %}
+{% with dropdown_class="bg-gray-100 border-2 py-1 pr-4 rounded-md w-full" %}
 <div class="max-w-7xl mt-4 mb-2 flex justify-between items-center mx-auto">
     <h1 class="text-2xl text-white font-bold">{% if is_editing %}Edit{% else %}Create{% endif %} Pitching Report</h1>
     <a href="/" class="rounded-md py-2 px-6 text-white border-2 inline-block">
@@ -14,7 +15,7 @@
     {% csrf_token %}
     {{ formset.management_form }}
     <div class="max-w-7xl mx-auto">
-        <div class="w-full flex bg-white p-6 rounded-md">
+        <div class="w-full flex bg-white p-6 rounded-md h-72">
             <div class="w-2/5">
                 <div> 
                     <label class="block tracking-wide text-gray-700 font-bold mb-2">{{ form.player.label }}</label>
@@ -24,15 +25,15 @@
                 <div class="flex flex-wrap mb-2 w-full">
                     <div class="pr-3 mb-6 md:mb-0 w-1/4">
                         {{ form.team|add_label_class:label_class }}
-                        {{ form.team|add_class:"bg-gray-100 border-2 py-1 pr-4 rounded-md w-full" }}
+                        {{ form.team|add_class:dropdown_class }}
                     </div>
                     <div class="px-3 mb-6 md:mb-0 w-1/4">
                         {{ form.position|add_label_class:label_class }}
-                        {{ form.position|add_class:"bg-gray-100 border-2 py-1 pr-4 rounded-md w-full" }}
+                        {{ form.position|add_class:dropdown_class }}
                     </div>
                     <div class="pl-3 mb-6 md:mb-0 w-1/4">
                         {{ form.throwing_arm|add_label_class:label_class }}
-                        {{ form.throwing_arm|add_class:"bg-gray-100 border-2 py-1 pr-4 rounded-md w-full" }}
+                        {{ form.throwing_arm|add_class:dropdown_class }}
                     </div>
                 </div>
                 <div>
@@ -42,7 +43,7 @@
             </div>
             <div class="w-3/5 pl-6">
                 <label class="block tracking-wide text-gray-700 font-bold mb-2">Declarative Statement</label>
-                <textarea name="declarative-statement" class="resize p-4 bg-gray-100 border-2 py-4 px-6 rounded-md w-full h-2/3" placeholder="Summarize this player's scouting look in a few brief sentences"></textarea>
+                {{ form.declarative_statement|add_class:"resize bg-gray-100 border-2 mb-4 p-4 rounded-md w-full h-5/6" }}
             </div>
         </div>
 
@@ -52,28 +53,28 @@
                     {{ pitch_form.id.as_hidden }}
                     <div class="px-2 w-1/6">
                         {{ pitch_form.pitch_type|add_label_class:label_class }}
-                        {{ pitch_form.pitch_type|add_class:"bg-gray-100 border-2 py-1 px-2 rounded-md w-full" }}
+                        {{ pitch_form.pitch_type|add_class:dropdown_class }}
                     </div>
                     
                     <div class="px-2 w-1/12">
                         <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Velo(low)</label>
-                        {{ pitch_form.velocity_low|add_class:"bg-gray-100 border-2 rounded-md py-1 px-2 w-full" }}
+                        {{ pitch_form.velocity_low|add_class:dropdown_class }}
                     </div>
                     <div class="px-2 w-1/12">
                         <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Velo(high)</label>
-                        {{ pitch_form.velocity_high|add_class:"bg-gray-100 border-2 rounded-md py-1 px-2 w-full" }}
+                        {{ pitch_form.velocity_high|add_class:dropdown_class }}
                     </div>
                     <div class="px-2 w-1/6">
                         {{ pitch_form.grade|add_label_class:label_class }}
-                        {{ pitch_form.grade|add_class:"bg-gray-100 border-2 py-1 pr-6 rounded-md w-full" }}
+                        {{ pitch_form.grade|add_class:dropdown_class }}
                     </div>
                     <div class="px-2 w-1/6">
                         {{ pitch_form.pitch_future_value|add_label_class:label_class }}
-                        {{ pitch_form.pitch_future_value|add_class:"bg-gray-100 border-2 py-1 pr-6 rounded-md w-full" }}
+                        {{ pitch_form.pitch_future_value|add_class:dropdown_class }}
                     </div>
                     <div class="px-2 w-1/3">
                         {{ pitch_form.comments|add_label_class:label_class }}
-                        {{ pitch_form.comments|add_class:"bg-gray-100 border-2 py-1 px-2 rounded-md w-full"}}
+                        {{ pitch_form.comments|add_class:dropdown_class }}
                     </div>
                 {% endfor %}
             </div>
@@ -114,5 +115,6 @@
     </div>
 
 </form>
+{% endwith %}
 {% endwith %}
 {% endblock %}
