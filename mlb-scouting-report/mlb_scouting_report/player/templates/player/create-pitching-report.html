@@ -37,7 +37,7 @@
                 </div>
                 <div>
                     <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Report Date</label>
-                    <input type="date" id="start" name="report-date" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full" value="2023-09-08" min="2018-01-01" max="2023-09-08" /> 
+                    <input type="date" name="{{ form.report_date.name }}" id="{{ form.report_date.id_for_label }}" class="bg-gray-100 border-2 py-1 px-2 rounded-md w-full" value="{{ form.report_date.value }}" min="2018-01-01" max="{{ current_date }}" />
                 </div>
             </div>
             <div class="w-3/5 pl-6">

@@ -42,3 +42,8 @@ def deleteHitter(request, slug):
     hitter = Hitter.objects.get(player__slug=slug)
     hitter.delete()
     return redirect('homePage')
+
+def pitcherHitter(request, slug):
+    pitcher = Pitcher.objects.get(player__slug=slug)
+    pitcher.delete()
+    return redirect('homePage')

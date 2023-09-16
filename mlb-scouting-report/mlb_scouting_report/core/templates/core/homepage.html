@@ -40,7 +40,7 @@
                 <td class="border-b text-center font-bold pl-4 pr-16">{{ hitter.overall_grade }}</td>
                 <td class="border-b w-24">
                     <a href="{% url 'updateHitter' hitter.player.slug %}" class="text-tbj-primary pr-2">Edit</a>
-                    <a href="/delete/{{ hitter.player.slug }}" class="text-red-500 pr-2">Delete</a></td>
+                    <a href="/delete-hitter/{{ hitter.player.slug }}" class="text-red-500 pr-2">Delete</a></td>
             </tr>
             {% endfor %}
         </tbody>
@@ -66,7 +66,7 @@
                 <th class="bg-tbj-secondary text-white text-center w-14">FB Velo</th>
                 <th class="bg-tbj-secondary text-white text-center w-12 pl-4 pr-16">OVR</th>
                 <th class="bg-tbj-secondary text-white text-left w-24">Actions</th>
-            </tr>
+            </tr> 
         </thead>
 
         {% for pitcher in pitchers %}
@@ -92,7 +92,7 @@
             <td class="border-b text-center font-bold w-12 pl-4 pr-16">{{ pitcher.overall_grade }}</td>
             <td class="border-b w-24">
                 <a href="{% url 'updatePitcher' pitcher.player.slug %}" class="text-tbj-primary pr-2">Edit</a>
-                <a href="/delete/{{ pitcher.player.slug }}" class="text-red-500 pr-2">Delete</a>
+                <a href="/delete-pitcher/{{ pitcher.player.slug }}" class="text-red-500 pr-2">Delete</a>
             </td>
         </tr>
         {% endfor %}

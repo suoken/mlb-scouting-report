@@ -20,8 +20,14 @@ def playerHittingReport(request, slug):
             ('Thr', stat.throwing_arm)
         ]
     ]
-    
-    return render(request, 'player/player-hitting-report.html', {'player': player, 'stat_fields': stat_fields, 'latest_hitter_record': latest_hitter_record})
+
+    context = {
+        'player': player,
+        'stat_fields': stat_fields,
+        'latest_hitter_record': latest_hitter_record
+    }
+        
+    return render(request, 'player/player-hitting-report.html', context)
 
 def playerPitchingReport(request, slug):
     player = get_object_or_404(Player, slug=slug)
@@ -40,12 +46,14 @@ def playerPitchingReport(request, slug):
         ]
     ]
 
-    return render(request, 'player/player-pitching-report.html', {
-                'player': player, 
-                'stat_fields': stat_fields, 
-                'latest_pitcher_record': latest_pitcher_record, 
-                'pitches': pitches
-                })
+    context = {
+        'player': player, 
+        'stat_fields': stat_fields, 
+        'latest_pitcher_record': latest_pitcher_record, 
+        'pitches': pitches
+    }
+
+    return render(request, 'player/player-pitching-report.html', context)
 
 def createHittingReport(request):
     if request.method == 'POST':
@@ -68,9 +76,10 @@ def createHittingReport(request):
     else:
         form = HittingReportForm()
         current_date = date.today()
+        formatted_date = current_date.strftime('%Y-%m-%d')
     
     context = {
-        'current_date': current_date,
+        'current_date': formatted_date,
         'fields_to_ignore': ["player", "team", "field_position", "batting_position", "throwing_arm", "report_date", "overall_grade", "future_grade", "declarative_statement"],
         'form': form 
     }
@@ -84,6 +93,9 @@ def updateHitter(request, slug):
         'player': hitter_instance.player.name,
         'team': hitter_instance.player.team
     }
+    current_date = date.today()
+    formatted_date = current_date.strftime('%Y-%m-%d')
+
     if request.method == "POST":
         form = HittingReportForm(request.POST, instance=hitter_instance)
         if form.is_valid():
@@ -91,18 +103,21 @@ def updateHitter(request, slug):
             return redirect('/')
     else:
         form = HittingReportForm(instance=hitter_instance, initial=initial_data)
-        current_date = date.today()
 
     context = {
         'form': form,
         'fields_to_ignore': ["player", "team", "field_position", "batting_position", "throwing_arm", "report_date", "overall_grade", "future_grade", "declarative_statement"],
         'is_editing': True if hitter_instance.id else False,
-        'current_date': current_date,
+        'current_date': formatted_date,
     }
     
     return render(request, 'player/create-hitting-report.html', context)
 
 def createPitchingReport(request):
+    formset = PitchFormSet()
+    current_date = date.today()
+    formatted_date = current_date.strftime('%Y-%m-%d')
+
     if request.method == "POST":
         form = PitchingReportForm(request.POST)
 
@@ -130,9 +145,14 @@ def createPitchingReport(request):
 
     else:
         form = PitchingReportForm()
-        formset = PitchFormSet()
 
-    return render(request, 'player/create-pitching-report.html', {'form': form, 'formset': formset})
+    context = {
+        'form': form,
+        'formset': formset,
+        'current_date': formatted_date
+    }
+
+    return render(request, 'player/create-pitching-report.html', context)
 
 def updatePitcher(request, slug):
     pitcher_instance = get_object_or_404(Pitcher, player__slug=slug)
@@ -140,6 +160,11 @@ def updatePitcher(request, slug):
         'player': pitcher_instance.player.name,
         'team': pitcher_instance.player.team
     }
+
+    formset = PitchFormEditSet(instance=pitcher_instance)
+    current_date = date.today()
+    formatted_date = current_date.strftime('%Y-%m-%d')
+
     if request.method == "POST":
         form = PitchingReportForm(request.POST, instance=pitcher_instance)
         if form.is_valid():
@@ -147,14 +172,14 @@ def updatePitcher(request, slug):
             return redirect('/')
     else:
         form = PitchingReportForm(instance=pitcher_instance, initial=initial_data)
-        formset = PitchFormEditSet(instance=pitcher_instance)
 
 
     context = {
         'form': form,
         'fields_to_ignore': ["player", "team", "field_position", "batting_position", "throwing_arm", "report_date", "overall_grade", "future_grade", "declarative_statement"],
         'is_editing': True if pitcher_instance.id else False,
-        'formset': formset
+        'formset': formset,
+        'current_date': formatted_date
     }
     
     return render(request, 'player/create-pitching-report.html', context)

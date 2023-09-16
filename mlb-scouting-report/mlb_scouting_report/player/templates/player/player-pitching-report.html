@@ -57,11 +57,11 @@
         <table class="w-full table-auto bg-white rounded-xl overflow-hidden text-sm">
             <thead>
                 <tr>
-                    <th class="bg-tbj-secondary text-white text-left px-4 py-2">Grade / FV</th>
-                    <th class="bg-tbj-secondary text-white text-left">Pitch</th>
-                    <th class="bg-tbj-secondary text-white text-left">Velo (Low)</th>
-                    <th class="bg-tbj-secondary text-white text-left">Velo (High)</th>
-                    <th class="bg-tbj-secondary text-white text-left">Comments</th>
+                    <th class="bg-tbj-secondary text-white text-left px-4 py-2 w-32">Grade / FV</th>
+                    <th class="bg-tbj-secondary text-white text-left w-32">Pitch</th>
+                    <th class="bg-tbj-secondary text-white text-center px-4 w-14">Velo (Low)</th>
+                    <th class="bg-tbj-secondary text-white text-center px-4 w-14">Velo (High)</th>
+                    <th class="bg-tbj-secondary text-white text-left px-4">Comments</th>
                 </tr>
             </thead>
             <tbody>
@@ -72,9 +72,9 @@
                         <div class="bg-tbj-primary text-white border font-bold rounded-md px-1.5 py-0.5 ml-1">{{ pitch.pitch_future_value }}</div>
                     </td>
                     <td class="border-b">{{ pitch.pitch_type }}</td>
-                    <td class="border-b">{{ pitch.velocity_low }}</td>
-                    <td class="border-b">{{ pitch.velocity_high }}</td>
-                    <td class="border-b">{{ pitch.comments }}</td>
+                    <td class="border-b text-center">{{ pitch.velocity_low }}</td>
+                    <td class="border-b text-center">{{ pitch.velocity_high }}</td>
+                    <td class="border-b text-left px-4">{{ pitch.comments }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -82,7 +82,7 @@
         <hr/>
 
         <div class="w-full bg-white flex rounded-xl justify-end">
-            <a href="#" class="bg-tbj-danger m-4 rounded-md py-2 px-3 text-white hover:bg-red-900 font-semibold">Delete Report</a>
+            <a href="/delete-pitcher/{{ player.slug }}" class="bg-tbj-danger m-4 rounded-md py-2 px-3 text-white hover:bg-red-900 font-semibold">Delete Report</a>
         </div>   
     </div>
 </div>

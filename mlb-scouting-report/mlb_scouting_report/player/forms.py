@@ -46,6 +46,7 @@ class PitchingReportForm(forms.ModelForm):
     team = forms.ModelChoiceField(label="Team", queryset=Team.objects.all(), to_field_name="code")
     position = forms.ChoiceField(label="Pos", choices=Pitcher.PitchingPositions.choices)
     throwing_arm = forms.ChoiceField(label="Throws", choices=ThrowingArm.choices)
+    report_date = forms.DateField(label="Report Date")
 
     overall_grade = forms.ChoiceField(label="Overall Grade", choices=ToolGrades.choices)
     future_grade = forms.ChoiceField(label="Future Grade", choices=ToolGrades.choices)
