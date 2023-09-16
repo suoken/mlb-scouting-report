@@ -135,7 +135,8 @@ def createPitchingReport(request):
                 throwing_arm=form.cleaned_data['throwing_arm'],
                 overall_grade=form.cleaned_data['overall_grade'],
                 future_grade=form.cleaned_data['future_grade'],
-                report_date = form.cleaned_data['report_date']
+                report_date = form.cleaned_data['report_date'],
+                declarative_statement = form.cleaned_data['declarative_statement']
             )
 
             pitcher_instance.save()
@@ -165,6 +166,7 @@ def updatePitcher(request, slug):
         'player': pitcher_instance.player.name,
         'team': pitcher_instance.player.team,
         'report_date': pitcher_instance.report_date,
+        'declarative_statement': pitcher_instance.declarative_statement
     }
 
     formset = PitchFormEditSet(instance=pitcher_instance)

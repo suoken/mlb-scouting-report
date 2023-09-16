@@ -119,7 +119,7 @@ class Pitcher(models.Model):
     player = models.ForeignKey(Player, related_name="pitchers", on_delete=models.CASCADE)
 
     report_date = models.DateField()
-    declarative_statement = models.TextField(max_length=1024, blank=True, null=True)
+    declarative_statement = models.TextField(blank=True, null=True)
     position = models.CharField(max_length=10, choices=PitchingPositions.choices)
     throwing_arm = models.CharField(max_length=20, choices=ThrowingArm.choices)
 
