@@ -141,7 +141,6 @@ def createPitchingReport(request):
                 declarative_statement = form.cleaned_data['declarative_statement']
             )
 
-            
             formset = PitchFormSet(request.POST, instance=pitcher_instance)
 
             print(formset._non_form_errors)
@@ -199,13 +198,22 @@ def updatePitcher(request, slug):
         
         try:
             if form.is_valid() and formset.is_valid():
+                player_name = form.cleaned_data['player']
+                team_name = form.cleaned_data['team']
+                report_date = form.cleaned_data['report_date']
+                declarative_statement = form.cleaned_data['declarative_statement']
+                player_instance, _ = Player.objects.get_or_create(name=player_name, team=team_name)
+                pitcher_instance.player = player_instance
+                pitcher_instance.report_date = report_date
+                pitcher_instance.declarative_statement = declarative_statement
+
                 pitch_types = [form.cleaned_data['pitch_type'] for form in formset.forms if 'pitch_type' in form.cleaned_data]
                 if len(pitch_types) != len(set(pitch_types)):
-                    print(pitch_types)
                     formset._non_form_errors = formset.error_class(["You cannot have duplicate pitch types."])
                 elif "" in pitch_types:
                     formset._non_form_errors = formset.error_class(["Pitch type cannot be empty."])
                 else:
+                    pitcher_instance.save()
                     form.save()
                     formset.save()
                     return redirect('homePage')
