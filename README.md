@@ -10,6 +10,7 @@ python manage.py runsever
 ```
 
 # Screenshots
+
 ![Screen Shot 2023-09-17 at 1 34 46 AM](https://github.com/suoken/mlb-scouting-report/assets/22568107/83071b68-8afb-457a-b9e4-94698eebe066)
 ![Screen Shot 2023-09-17 at 1 34 37 AM](https://github.com/suoken/mlb-scouting-report/assets/22568107/5909904d-6301-46e2-a7e2-1d32f39ab782)
 ![Screen Shot 2023-09-17 at 1 34 28 AM](https://github.com/suoken/mlb-scouting-report/assets/22568107/4004e4e8-d49e-4788-bfea-774b5c566a71)
