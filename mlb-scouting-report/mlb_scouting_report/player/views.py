@@ -56,31 +56,26 @@ def playerPitchingReport(request, slug):
     return render(request, 'player/player-pitching-report.html', context)
 
 def createHittingReport(request):
-    current_date = date.today()
-    formatted_date = current_date.strftime('%Y-%m-%d')
-
-    if request.method == 'POST':
-        form = HittingReportForm(request.POST)
+    form = HittingReportForm(request.POST if request.method == "POST" else None)
         
+    if form.is_valid():
         try:
-            if form.is_valid():
-                player_name = form.cleaned_data['player']
-                team_name = form.cleaned_data['team']
-                report_date_value = form.cleaned_data['report_date']
-                player_instance, _ = Player.objects.get_or_create(name=player_name, team=team_name)
+            player_name = form.cleaned_data['player']
+            team_name = form.cleaned_data['team']
+            report_date_value = form.cleaned_data['report_date']
+            player_instance, _ = Player.objects.get_or_create(name=player_name, team=team_name)
 
-                hitter = form.save(commit=False)
-                hitter.report_date = report_date_value
-                hitter.player = player_instance
-                hitter.save()
+            hitter = form.save(commit=False)
+            hitter.report_date = report_date_value
+            hitter.player = player_instance
+            hitter.save()
 
-                return redirect('/')
+            return redirect('homePage')
         except Exception as e:
             print("Exception:", e)
-                
-    else:
-        form = HittingReportForm()
     
+    formatted_date = date.today().strftime('%Y-%m-%d')
+
     context = {
         'current_date': formatted_date,
         'fields_to_ignore': ["player", "team", "field_position", "batting_position", "throwing_arm", "report_date", "overall_grade", "future_grade", "declarative_statement"],
@@ -99,7 +94,7 @@ def updateHitter(request, slug):
 
     form = HittingReportForm(request.POST if request.method == "POST" else None, instance=hitter_instance, initial=initial_data if request.method == 'GET' else None)
 
-    if request.method == "POST" and form.is_valid():
+    if form.is_valid():
         try:
             player_instance = hitter_instance.player
             player_instance.name = form.cleaned_data['player']
@@ -138,7 +133,7 @@ def createPitchingReport(request):
     form = PitchingReportForm(request.POST if request.method == "POST" else None)
     formset = PitchFormSet(request.POST if request.method == "POST" else None)
 
-    if request.method == "POST" and form.is_valid():
+    if form.is_valid():
         try:
             player_instance, _ = Player.objects.get_or_create(name=form.cleaned_data['player'], team=form.cleaned_data['team'])
             pitcher_instance = Pitcher(
