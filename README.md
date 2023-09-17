@@ -5,8 +5,8 @@ MLB scouting report using Django and tailwind CSS. This webapp has the ability t
 # Installation and usage
 ```
 pip install -r requirements.txt
-python manage.py makemigrations
-python manage.py runsever
+python mlb-scouting-report/manage.py migrate
+python mlb-scouting-report/manage.py runsever
 ```
 
 # Screenshots
