@@ -64,11 +64,29 @@ class PitchingReportForm(forms.ModelForm):
         self.label_suffix = ""
 
 class PitchForm(forms.ModelForm):
-    pitch_type = forms.ChoiceField(label="Pitch", choices=Pitch.PitchType.choices)
+    EMPTY_CHOICE = [("", "Select")]
+
+    pitch_type = forms.ChoiceField(label="Pitch", choices=EMPTY_CHOICE + list(Pitch.PitchType.choices))
     grade = forms.ChoiceField(label="Grade", choices=ToolGrades.choices)
     pitch_future_value = forms.ChoiceField(label="Pitch Future Value", choices=ToolGrades.choices)
-    velocity_low = forms.IntegerField(widget=forms.NumberInput(attrs={'min': '0'}))
-    velocity_high = forms.IntegerField(widget=forms.NumberInput(attrs={'min': '0'}))
+    velocity_low = forms.IntegerField(
+        label="Velo(low)", 
+        required=True,
+        widget=forms.NumberInput(attrs={'min': '0'}),
+        error_messages={
+            'required': 'This field cannot be left empty.',
+            'invalid': 'Please enter a valid number.'
+        }
+    )
+    velocity_high = forms.IntegerField(
+        label="Velo(high)",         
+        required=True,
+        widget=forms.NumberInput(attrs={'min': '0'}),
+        error_messages={
+            'required': 'This field cannot be left empty.',
+            'invalid': 'Please enter a valid number.'
+        }
+    )
     comments = forms.CharField(label="Comments", required=False)
 
     class Meta:

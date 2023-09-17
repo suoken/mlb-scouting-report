@@ -115,6 +115,8 @@ def updateHitter(request, slug):
     
     return render(request, 'player/create-hitting-report.html', context)
 
+
+
 def createPitchingReport(request):
     formset = PitchFormSet()
     current_date = date.today()
@@ -139,16 +141,31 @@ def createPitchingReport(request):
                 declarative_statement = form.cleaned_data['declarative_statement']
             )
 
-            pitcher_instance.save()
             
             formset = PitchFormSet(request.POST, instance=pitcher_instance)
 
+            print(formset._non_form_errors)
+
             if formset.is_valid():
-                formset.save()
-                return redirect('homePage')
+                pitch_types = [form.cleaned_data['pitch_type'] for form in formset.forms if 'pitch_type' in form.cleaned_data]
+                if len(pitch_types) != len(set(pitch_types)):
+                    print(pitch_types)
+                    formset._non_form_errors = formset.error_class(["You cannot have duplicate pitch types."])
+                elif "" in pitch_types:
+                    formset._non_form_errors = formset.error_class(["Pitch type cannot be empty."])
+                else:
+                    pitcher_instance.save()
+                    formset.save()
+                    return redirect('homePage')
         
             else:
-                print(formset.errors)
+                context = {
+                    'form': form,
+                    'formset': formset,
+                    'current_date': formatted_date
+                }
+                return render(request, 'player/create-pitching-report.html', context)
+            
         else:
              formset = PitchFormSet()
 
@@ -178,18 +195,20 @@ def updatePitcher(request, slug):
 
     if request.method == "POST":
         form = PitchingReportForm(request.POST, instance=pitcher_instance)
+        formset = PitchFormEditSet(request.POST, instance=pitcher_instance)
         
         try:
-            if form.is_valid():
-                form.save()
-                formset = PitchFormEditSet(request.POST, instance=pitcher_instance)
-                
-                if formset.is_valid():
+            if form.is_valid() and formset.is_valid():
+                pitch_types = [form.cleaned_data['pitch_type'] for form in formset.forms if 'pitch_type' in form.cleaned_data]
+                if len(pitch_types) != len(set(pitch_types)):
+                    print(pitch_types)
+                    formset._non_form_errors = formset.error_class(["You cannot have duplicate pitch types."])
+                elif "" in pitch_types:
+                    formset._non_form_errors = formset.error_class(["Pitch type cannot be empty."])
+                else:
+                    form.save()
                     formset.save()
                     return redirect('homePage')
-                else:
-                    print(formset.errors)
-
         except Exception as e:
             print(e)
             

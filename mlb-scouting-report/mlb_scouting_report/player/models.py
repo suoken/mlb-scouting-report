@@ -164,8 +164,11 @@ class Pitch(models.Model):
     comments = models.CharField(max_length=255, blank=True)
 
     def clean(self):
-        if self.velocity_low > self.velocity_high:
-            raise ValidationError("velocity_low cannot be greater than velocity_high") # handle this gracefully
+        if self.velocity_low is None or self.velocity_high is None:
+            raise ValidationError("Both Velo(low) and Velo(high) must be populated")
+        elif self.velocity_low > self.velocity_high:
+            raise ValidationError("Velo(low) cannot be greater than Velo(high)")
+
         
     def save(self, *args, **kwargs):
         self.full_clean()

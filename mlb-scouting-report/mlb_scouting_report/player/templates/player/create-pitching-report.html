@@ -54,15 +54,27 @@
                     <div class="px-2 w-1/6">
                         {{ pitch_form.pitch_type|add_label_class:label_class }}
                         {{ pitch_form.pitch_type|add_class:dropdown_class }}
+                        <div class="text-red-500 text-xs mt-1">
+                            {{ pitch_form.pitch_type.errors }}
+                        </div>
                     </div>
-                    
                     <div class="px-2 w-1/12">
                         <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Velo(low)</label>
                         {{ pitch_form.velocity_low|add_class:"bg-gray-100 border-2 py-1 rounded-md w-full" }}
+                        {% if pitch_form.velocity_low.errors %}
+                            <div class="text-red-500 text-xs mt-1">
+                                {{ pitch_form.velocity_low.errors|first }}
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="px-2 w-1/12">
                         <label class="block tracking-wide text-gray-700 font-bold mb-2 mt-4">Velo(high)</label>
                         {{ pitch_form.velocity_high|add_class:"bg-gray-100 border-2 py-1 rounded-md w-full" }}
+                        {% if pitch_form.velocity_high.errors %}
+                            <div class="text-red-500 text-xs mt-1">
+                                {{ pitch_form.velocity_high.errors|first }}
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="px-2 w-1/6">
                         {{ pitch_form.grade|add_label_class:label_class }}
@@ -91,24 +103,22 @@
                 </div>
             </div>
             <hr/>
-            
-    
-            {% if form.errors %}
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <div class="p-6 bg-red-200 text-red-800 rounded-md">
-                            <p>{{ error|escape }} {{ field.name }}</p>
-                        </div>
+        
+            {% if formset.errors or formset.non_form_errors %}
+                <div class="p-6 mt-4 bg-red-200 text-red-800 rounded-xl">
+                    <p>{{ formset.non_form_errors|escape }}</p>
+                    {% for form_errors in formset.errors %}
+                        {% for key, value in form_errors.items %}
+                            {% if key == "__all__" %}
+                                {% for error in value %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
-    
-                {% for error in form.non_field_errors %}
-                    <div class="p-6 bg-red-200 text-red-800 rounded-md">
-                        <p>{{ error|escape }}</p>
-                    </div>
-                {% endfor %}
+                </div>
             {% endif %}
-    
+            
             <button class="bg-green-700 mt-4 rounded-md py-2 px-3 text-white hover:bg-green-900 font-semibold">Submit</button>
         </div>
 
