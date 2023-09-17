@@ -91,30 +91,36 @@ def createHittingReport(request):
 
 def updateHitter(request, slug):
     hitter_instance = get_object_or_404(Hitter, player__slug=slug)
+
     initial_data = {
         'player': hitter_instance.player.name,
         'team': hitter_instance.player.team
     }
-    current_date = date.today()
-    formatted_date = current_date.strftime('%Y-%m-%d')
 
-    if request.method == "POST":
-        form = HittingReportForm(request.POST, instance=hitter_instance)
-        if form.is_valid():
+    form = HittingReportForm(request.POST if request.method == "POST" else None, instance=hitter_instance, initial=initial_data if request.method == 'GET' else None)
+
+    if request.method == "POST" and form.is_valid():
+        try:
+            player_instance = hitter_instance.player
+            player_instance.name = form.cleaned_data['player']
+            player_instance.team = form.cleaned_data['team']
+            player_instance.save()
+
             form.save()
-            return redirect('/')
-    else:
-        form = HittingReportForm(instance=hitter_instance, initial=initial_data)
+            return redirect('homePage')
+        except Exception as e:
+            print('Exception:', e)
+
+    formatted_date =  date.today().strftime('%Y-%m-%d')
 
     context = {
         'form': form,
         'fields_to_ignore': ["player", "team", "field_position", "batting_position", "throwing_arm", "report_date", "overall_grade", "future_grade", "declarative_statement"],
-        'is_editing': True if hitter_instance.id else False,
+        'is_editing': bool(hitter_instance.id),
         'current_date': formatted_date,
     }
     
     return render(request, 'player/create-hitting-report.html', context)
-
 
 def get_pitch_types_and_check_errors(formset):
     pitch_types = [form.cleaned_data.get('pitch_type', None) for form in formset.forms]
