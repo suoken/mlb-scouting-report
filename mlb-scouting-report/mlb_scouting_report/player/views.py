@@ -190,7 +190,10 @@ def updatePitcher(request, slug):
         
         if pitch_types:
             try:
-                player_instance, _ = Player.objects.get_or_create(name=data['player_name'], team=data['team_name'])
+                player_instance = pitcher_instance.player
+                player_instance.name = data['player_name']
+                player_instance.team = data['team_name']
+                player_instance.save()
 
                 pitcher_instance.player = player_instance
                 pitcher_instance.report_date = data['report_date']
