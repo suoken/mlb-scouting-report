@@ -116,60 +116,44 @@ def updateHitter(request, slug):
     return render(request, 'player/create-hitting-report.html', context)
 
 
+def get_pitch_types_and_check_errors(formset):
+    pitch_types = [form.cleaned_data.get('pitch_type', None) for form in formset.forms]
+
+    if len(pitch_types) != len(set(pitch_types)):
+        formset._non_form_errors = formset.error_class(["You cannot have duplicate pitch types."])
+        return None
+    elif "" in pitch_types:
+        formset._non_form_errors = formset.error_class(["Pitch type cannot be empty."])
+        return None
+
+    return pitch_types
 
 def createPitchingReport(request):
-    formset = PitchFormSet()
-    current_date = date.today()
-    formatted_date = current_date.strftime('%Y-%m-%d')
+    form = PitchingReportForm(request.POST if request.method == "POST" else None)
+    formset = PitchFormSet(request.POST if request.method == "POST" else None)
 
-    if request.method == "POST":
-        form = PitchingReportForm(request.POST)
-
-        if form.is_valid():
-            player_name = form.cleaned_data['player']
-            team = form.cleaned_data['team']
-
-            player_instance, _ = Player.objects.get_or_create(name=player_name, team=team)
-            
+    if request.method == "POST" and form.is_valid():
+        try:
+            player_instance, _ = Player.objects.get_or_create(name=form.cleaned_data['player'], team=form.cleaned_data['team'])
             pitcher_instance = Pitcher(
                 player=player_instance,
                 position=form.cleaned_data['position'],
                 throwing_arm=form.cleaned_data['throwing_arm'],
                 overall_grade=form.cleaned_data['overall_grade'],
                 future_grade=form.cleaned_data['future_grade'],
-                report_date = form.cleaned_data['report_date'],
-                declarative_statement = form.cleaned_data['declarative_statement']
+                report_date=form.cleaned_data['report_date'],
+                declarative_statement=form.cleaned_data['declarative_statement']
             )
-
             formset = PitchFormSet(request.POST, instance=pitcher_instance)
 
-            print(formset._non_form_errors)
-
-            if formset.is_valid():
-                pitch_types = [form.cleaned_data['pitch_type'] for form in formset.forms if 'pitch_type' in form.cleaned_data]
-                if len(pitch_types) != len(set(pitch_types)):
-                    print(pitch_types)
-                    formset._non_form_errors = formset.error_class(["You cannot have duplicate pitch types."])
-                elif "" in pitch_types:
-                    formset._non_form_errors = formset.error_class(["Pitch type cannot be empty."])
-                else:
-                    pitcher_instance.save()
-                    formset.save()
-                    return redirect('homePage')
+            if formset.is_valid() and get_pitch_types_and_check_errors(formset):
+                pitcher_instance.save()
+                formset.save()
+                return redirect('homePage')
+        except Exception as e:
+            print('Exception:', e)
         
-            else:
-                context = {
-                    'form': form,
-                    'formset': formset,
-                    'current_date': formatted_date
-                }
-                return render(request, 'player/create-pitching-report.html', context)
-            
-        else:
-             formset = PitchFormSet()
-
-    else:
-        form = PitchingReportForm()
+    formatted_date = date.today().strftime('%Y-%m-%d')
 
     context = {
         'form': form,
@@ -179,8 +163,17 @@ def createPitchingReport(request):
 
     return render(request, 'player/create-pitching-report.html', context)
 
+def extract_data_from_form(form):
+    return {
+        'player_name': form.cleaned_data['player'],
+        'team_name': form.cleaned_data['team'],
+        'report_date': form.cleaned_data['report_date'],
+        'declarative_statement': form.cleaned_data['declarative_statement']
+    }
+
 def updatePitcher(request, slug):
     pitcher_instance = get_object_or_404(Pitcher, player__slug=slug)
+
     initial_data = {
         'player': pitcher_instance.player.name,
         'team': pitcher_instance.player.team,
@@ -188,45 +181,35 @@ def updatePitcher(request, slug):
         'declarative_statement': pitcher_instance.declarative_statement
     }
 
-    formset = PitchFormEditSet(instance=pitcher_instance)
-    current_date = date.today()
-    formatted_date = current_date.strftime('%Y-%m-%d')
+    form = PitchingReportForm(request.POST if request.method == "POST" else None, instance=pitcher_instance, initial=initial_data)
+    formset = PitchFormEditSet(request.POST if request.method == "POST" else None, instance=pitcher_instance)
 
-    if request.method == "POST":
-        form = PitchingReportForm(request.POST, instance=pitcher_instance)
-        formset = PitchFormEditSet(request.POST, instance=pitcher_instance)
+    if request.method == "POST" and form.is_valid() and formset.is_valid():
+        data = extract_data_from_form(form)
+        pitch_types = get_pitch_types_and_check_errors(formset)
         
-        try:
-            if form.is_valid() and formset.is_valid():
-                player_name = form.cleaned_data['player']
-                team_name = form.cleaned_data['team']
-                report_date = form.cleaned_data['report_date']
-                declarative_statement = form.cleaned_data['declarative_statement']
-                player_instance, _ = Player.objects.get_or_create(name=player_name, team=team_name)
-                pitcher_instance.player = player_instance
-                pitcher_instance.report_date = report_date
-                pitcher_instance.declarative_statement = declarative_statement
+        if pitch_types:
+            try:
+                player_instance, _ = Player.objects.get_or_create(name=data['player_name'], team=data['team_name'])
 
-                pitch_types = [form.cleaned_data['pitch_type'] for form in formset.forms if 'pitch_type' in form.cleaned_data]
-                if len(pitch_types) != len(set(pitch_types)):
-                    formset._non_form_errors = formset.error_class(["You cannot have duplicate pitch types."])
-                elif "" in pitch_types:
-                    formset._non_form_errors = formset.error_class(["Pitch type cannot be empty."])
-                else:
-                    pitcher_instance.save()
-                    form.save()
-                    formset.save()
-                    return redirect('homePage')
-        except Exception as e:
-            print(e)
-            
-    else:
-        form = PitchingReportForm(instance=pitcher_instance, initial=initial_data)
+                pitcher_instance.player = player_instance
+                pitcher_instance.report_date = data['report_date']
+                pitcher_instance.declarative_statement = data['declarative_statement']
+                pitcher_instance.save()
+                
+                form.save()
+                formset.save()
+
+                return redirect('homePage')
+            except Exception as e:
+                print("Exception: ", e)
+
+    formatted_date = date.today().strftime('%Y-%m-%d')
 
     context = {
         'form': form,
         'fields_to_ignore': ["player", "team", "field_position", "batting_position", "throwing_arm", "report_date", "overall_grade", "future_grade", "declarative_statement"],
-        'is_editing': True if pitcher_instance.id else False,
+        'is_editing': bool(pitcher_instance.id),
         'formset': formset,
         'current_date': formatted_date
     }
