@@ -44,8 +44,13 @@ class Player(models.Model):
     def save(self, *args, **kwargs):
         # Generate slug from name if it doesn't exist
         if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
+            self.slug = orig_slug = slugify(self.name)
+            counter = 1
+
+            while Player.objects.filter(slug=self.slug).exists():
+                self.slug = '%s-%d' % (orig_slug, counter)
+                counter += 1
+        super(Player, self).save(*args, **kwargs)
     
     def __str__(self):
         return self.name
